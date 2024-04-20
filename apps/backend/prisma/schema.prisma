@@ -1,0 +1,129 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  TEACHER
+  STUDENT
+  DIRECROR
+}
+
+
+model User {
+  id        String    @id @default(uuid())
+  firstName String    @map("first_name")
+  lastName  String    @map("last_name")
+  email     String    @unique
+  password  String?
+  googleId  String? @map("google_id")
+  role Role
+  teachers   Teacher[]
+  students  Student[]
+  school School[]
+  @@map("user")
+}
+
+model School {
+  id      String  @id @default(uuid())
+  title   String
+  classes Class[]
+
+  adminId String @unique @map("admin_id")
+  admin User   @relation(fields: [adminId], references: [id])
+  @@map("school")
+}
+
+model Teacher {
+  id     String @id @default(uuid())
+  userId String @unique @map("user_id")
+  user   User   @relation(fields: [userId], references: [id])
+  classes  Class[]
+  @@map("teacher")
+}
+
+model Class {
+  id      String @id @default(uuid())
+  order   String
+  scholId String @unique @map("school_id")
+  school  School @relation(fields: [scholId], references: [id])
+  students Student[] 
+  homeroomTeacherId String @map("homeroom_teacher_id")
+  homeroomTeacher  Teacher  @relation(fields: [homeroomTeacherId], references: [id])
+  ratings Rating[] 
+  @@map("class")
+}
+
+model Student {
+  id     String @id @default(uuid())
+  userId String @unique @map("user_id")
+  user   User   @relation(fields: [userId], references: [id])
+  classId String @unique @map("class_id")
+  class Class   @relation(fields: [classId], references: [id])
+  ratings Rating[] 
+  @@map("student")
+}
+
+
+model Subject{
+  id     String @id @default(uuid())
+  title String
+  ratings Rating[]
+  task Task[]
+  @@map("subject")
+}
+
+model Rating  {
+  id     String @id @default(uuid())
+  title String
+  stdudentId String @unique @map("student_id")
+  student Student   @relation(fields: [stdudentId], references: [id])
+  classId String @unique @map("class_id")
+  class Class   @relation(fields: [classId], references: [id])
+  subjectId String @unique @map("subject_id")
+  subject Subject   @relation(fields: [subjectId], references: [id])
+  grade Int
+  taskId String @unique @map("task_id")
+  task Task   @relation(fields: [taskId], references: [id])
+  @@map("rating")
+}
+
+
+model Task  {
+  id     String @id @default(uuid())
+  title String
+  description String
+  ratings Rating[]
+  subjectId String @unique @map("subject_id")
+  subject Subject   @relation(fields: [subjectId], references: [id])
+  attachments TaskAttachment[]
+  @@map("task")
+}
+
+
+model Attachment  {
+  id     String @id @default(uuid())
+  attachment_key String
+  taskAttachment TaskAttachment?
+  @@map("attachment")
+}
+
+model TaskAttachment  {
+  id     String @id @default(uuid())
+  attachmentId String @unique @map("attachment_id")
+  attachment Attachment   @relation(fields: [attachmentId], references: [id])
+  taskId String @unique @map("task_id")
+  task Task   @relation(fields: [taskId], references: [id])
+  @@map("task_attachment")
+}
