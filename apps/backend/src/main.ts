@@ -4,6 +4,6 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   await app.listen('3005');
-  //await app.listen('BACKEND_PORT');
+  await app.listen('BACKEND_PORT');
 }
 bootstrap();
