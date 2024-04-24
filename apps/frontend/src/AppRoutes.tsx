@@ -1,4 +1,7 @@
+import { Editor } from '../src/components/TextEditor/Editor';
+import TextEditor from './components/TextEditor/TextEditor';
 import { HomePage } from './pages/HomePage';
+import { SchoolsPage } from './pages/SchoolsPage';
 
 const AppRoutes = [
     {
@@ -7,11 +10,14 @@ const AppRoutes = [
     },
     {
         path: '/shools',  
-        element: <></>
+        element: <SchoolsPage/>
     },
     {
         path: '/blog',
-        element: <></>
+        element: 
+        // <></>
+        // <TextEditor/>
+        <Editor/>
     },
     {
         path: '/about',
