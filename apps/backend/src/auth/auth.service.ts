@@ -45,8 +45,8 @@ export class AuthService {
     };
   }
 
-  async refreshToken(signInDto: SignInDto) {
-    const user = await this.userService.findOneByEmail(signInDto.email);
+  async refreshToken(userId: string) {
+    const user = await this.userService.findOneById(userId);
 
     if (!user) {
       throw new UnauthorizedException('Invalid email or password');
