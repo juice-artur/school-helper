@@ -4,7 +4,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from '@prisma/client';
 import { RolesGuard } from 'src/auth/gaurds/roles.guard';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/gaurds/jwt-auth.guard';
 
 @Controller('user')
 @UseGuards(JwtAuthGuard, RolesGuard)

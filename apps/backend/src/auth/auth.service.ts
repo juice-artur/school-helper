@@ -33,10 +33,27 @@ export class AuthService {
     }
 
     const token = this.jwtService.sign({ userId: user.id });
+    const refreshToken = this.jwtService.sign(
+      { userId: user.id },
+      { expiresIn: '7d', secret: `${process.env.JWT_REFRESH_SECRET}` },
+    );
 
     return {
       user,
       accessToken: token,
+      refreshToken: refreshToken,
+    };
+  }
+
+  async refreshToken(signInDto: SignInDto) {
+    const user = await this.userService.findOneByEmail(signInDto.email);
+
+    if (!user) {
+      throw new UnauthorizedException('Invalid email or password');
+    }
+    const accessToken = this.jwtService.sign({ userId: user.id });
+    return {
+      accessToken: accessToken,
     };
   }
 }
