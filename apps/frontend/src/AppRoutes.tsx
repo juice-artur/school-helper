@@ -1,5 +1,4 @@
-import { Editor } from '../src/components/TextEditor/Editor';
-import TextEditor from './components/TextEditor/TextEditor';
+import { CreateTaskPage } from './pages/CreateTaskPage';
 import { HomePage } from './pages/HomePage';
 import { SchoolsPage } from './pages/SchoolsPage';
 
@@ -15,9 +14,7 @@ const AppRoutes = [
     {
         path: '/blog',
         element: 
-        // <></>
-        // <TextEditor/>
-        <Editor/>
+        <></>
     },
     {
         path: '/about',
@@ -26,6 +23,19 @@ const AppRoutes = [
     {
         path: '/contacts',
         element: <></>
+    },
+    {
+        path: '/create-task',
+        element: <CreateTaskPage/>
+    },
+    {
+
+    },
+    {
+
+    },
+    {
+
     },
     {
 

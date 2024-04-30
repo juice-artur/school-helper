@@ -1,7 +1,12 @@
 import { Box, Button, Typography } from '@mui/material';
 import Logo from '../assets/img/Logo.jpg'
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { increment } from '../store/reducers/tokenSlice';
 
 export const HomePage = ():JSX.Element => {
+    const test = useAppSelector(state => state.token)
+    console.log(test)
+    const dispatch = useAppDispatch()
     return(
         <Box style={{width: '100%', height: '100vh', position: 'absolute', top: '0px', overflow: "hidden", backgroundColor: 'black'}}>
             <img src={Logo} style={{width: '100%', position: 'absolute', top: '0px'}}/>

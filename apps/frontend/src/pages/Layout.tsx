@@ -6,7 +6,7 @@ import {Navbar} from "../components/Navbar/Navbar";
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#EF5151'
+      main: '#423A34'
     },
   },
   components: {
@@ -37,6 +37,12 @@ const theme = createTheme({
       fontWeight: 300,
       color: '#fff'
     },  
+    h4: {
+      fontFamily: 'Inter, normal',
+      fontSize: 20,
+      fontWeight: 300,
+      color: '#000'
+    },
 }
 })
 

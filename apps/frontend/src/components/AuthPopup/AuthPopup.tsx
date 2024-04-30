@@ -8,9 +8,16 @@ import {
   Button,
   Typography
 } from '@mui/material';
+import { LoginPopup } from "./LoginPopup";
+import { RegisterPopup } from "./RegisterPopup";
+
+
 
 export const AuthPopup = () => {
   const [open, setOpen] = useState(false);
+  const [loginPopup, setLoginPopup] = useState(true);
+  const [registerPopup, setRegisterPopup] = useState(false);
+  const [resetPopup, setResetPopup] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -18,6 +25,16 @@ export const AuthPopup = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleRegisterPopupOpen = () => {
+    setRegisterPopup(true)
+    setLoginPopup(false)
+  }
+  const handleLoginPopupOpen = () => {
+    setLoginPopup(true)
+    setRegisterPopup(false)
+  }
+
  return(
   <Box>
     <Button 
@@ -38,51 +55,24 @@ export const AuthPopup = () => {
             minWidth: 20,
             color: "inherit"
           }}>
-            <img src={Close} alt="" width='20px' />
-          </Button>
-          <Box sx={{
-          }}>
-            <Typography variant='h3' sx={{fontSize: 16, color: '#000', fontWeight: 500}}>Вхід</Typography>
-            <Box sx={{
-              display: 'flex',
-              alignItems: 'center',
-              marginTop: 2,
-              borderRadius: '50px'
-            }}>
-              <form style={{display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center'}}>
-                <TextField
-                  fullWidth
-                  id="email"
-                  name="email"
-                  label="Електронна пошта"
-                  sx={{marginTop: "25px"}}
-                />
-                <Box sx={{
-                  width: '100%',
-                  position: 'relative'
-                }}>
-                  <TextField
-                    fullWidth
-                    id="password"
-                    name="password"
-                    label="Пароль"
-                    type={'password'}
-                    sx={{marginTop: '25px'}}
-                  />
-                </Box>
-                <Button color="primary" variant="contained" fullWidth type="submit" sx={{
-                  width: 200,
-                  height: 40,
-                  marginTop: "25px",
-                  borderRadius: '10px',
-                }}>
-                  Вхід
-                </Button>
-              </form>
-      </Box>
-    </Box>
+          <img src={Close} alt="" width='20px' />
+        </Button>
+          <Box>
+            <Typography variant='h3' sx={{fontSize: 16, color: '#000', fontWeight: 500}}>{loginPopup ? 'Вхід' : registerPopup ? 'Реєстрація': 'Заміна паролю'}</Typography>
+            {loginPopup ? 
+              <>
+                  <LoginPopup/>
+                  <Typography textAlign={'center'}>Не маєте акаунту? <Button onClick={handleRegisterPopupOpen}>Реєстрація</Button></Typography>
+              </> 
+              : 
+              <>
+                  <RegisterPopup/>
+                  <Typography textAlign={'center'}>Вже маєте акаунт? <Button onClick={handleLoginPopupOpen}>Увійти</Button></Typography>
+              </>
+            }
+          </Box>
+        </Box>
 
-      </Box>
     </Dialog>
   </Box>
  )
