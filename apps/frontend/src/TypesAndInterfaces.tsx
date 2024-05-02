@@ -6,8 +6,8 @@ export type UserLogInValues = {
 export type UserRegisterValues = {
     email: string,
     password: string,
-    firstname: string,
-    lastname: string, 
+    firstName: string,
+    lastName: string, 
 }
 
 export type User = {

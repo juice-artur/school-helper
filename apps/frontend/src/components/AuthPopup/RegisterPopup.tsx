@@ -3,23 +3,27 @@ import { useState } from 'react'
 import { UserRegisterValues } from "../../TypesAndInterfaces"
 
 
-export const RegisterPopup = () => {
+export const RegisterPopup = (backToLoginPopup:any) => {
     const [isValidEmail, setIsValidEmail] = useState<boolean>(true)
     const [isValidPassword, setIsValidPassword] = useState<boolean>(true)
-    const [error, setError] = useState<string|null>(null)
+    // const [error, setError] = useState<string|null>(null)
+    const [isSuccessReg, setIsSuccessReg] = useState<boolean>(false)
+    const [success, setSuccess] = useState(false);
+    const [error, setError] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
 
     const [formState, setFormState] = useState<UserRegisterValues>({
         email: "",
         password: "",
-        firstname: "",
-        lastname: "",
+        firstName: "",
+        lastName: "",
     });
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
-        const response = await fetch(`http://localhost:3005/auth/signin`, {
+            console.log(formState)
+        const response = await fetch(`http://localhost:3005/auth/signup`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -32,10 +36,13 @@ export const RegisterPopup = () => {
         console.log(response);
 
         if (response.ok) {
-            localStorage.setItem('token', res.accessToken);
-            window.location.reload();
+            setSuccess(true);
+            setError(false)
+            setTimeout(() => {
+              backToLoginPopup();
+            }, 3000)
         } else {
-            setError(response.statusText);
+            setError(true);
         }
 
     };
@@ -82,16 +89,16 @@ return (
                         />
                         <TextField
                             fullWidth
-                            id="firstname"
-                            name="firstname"
+                            id="firstName"
+                            name="firstName"
                             label="Ім'я"
                             onChange={handleFormChange}
                             sx={{marginTop: '25px'}}
                         />
                         <TextField
                             fullWidth
-                            id="lastname"
-                            name="lastname"
+                            id="lastName"
+                            name="lastName"
                             label="Прізвище"
                             onChange={handleFormChange}
                             sx={{marginTop: '25px'}}

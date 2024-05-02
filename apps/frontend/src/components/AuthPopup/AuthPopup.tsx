@@ -66,7 +66,7 @@ export const AuthPopup = () => {
               </> 
               : 
               <>
-                  <RegisterPopup/>
+                  <RegisterPopup backToLoginPopup={handleLoginPopupOpen}/>
                   <Typography textAlign={'center'}>Вже маєте акаунт? <Button onClick={handleLoginPopupOpen}>Увійти</Button></Typography>
               </>
             }
