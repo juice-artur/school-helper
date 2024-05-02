@@ -1,9 +1,10 @@
-import { Body, Controller, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { SignInDto } from './dto/SignInDto';
 import { AuthRequestHelper } from './utils/cookie-helper.service';
+import { JwtGuard } from './gaurds/jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -28,5 +29,11 @@ export class AuthController {
 
       this.requestHelper.attachJwtTokenToCookie(res, token);
     }
+  }
+
+  @UseGuards(JwtGuard)
+  @Get('logout')
+  async logout(@Res({ passthrough: true }) res: Response) {
+    return this.requestHelper.clearJwtTokenFromCookie(res);
   }
 }

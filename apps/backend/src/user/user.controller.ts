@@ -3,7 +3,7 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from '@prisma/client';
-import { JwtAuthGuard } from 'src/auth/gaurds/jwt-auth.guard';
+import { JwtGuard as JwtGuard } from 'src/auth/gaurds/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/gaurds/roles.guard';
 
 @Controller('user')
@@ -14,7 +14,7 @@ export class UserController {
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(JwtGuard, RolesGuard)
   @Get()
   @Roles(Role.ADMIN)
   findAll() {
