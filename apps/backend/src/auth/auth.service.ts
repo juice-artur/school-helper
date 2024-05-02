@@ -17,6 +17,10 @@ export class AuthService {
     return this.userService.create(createUserDto);
   }
 
+  async getUserById(userId: string) {
+    return this.userService.findOneById(userId);
+  }
+
   async signIn(signInDto: SignInDto) {
     const user = await this.userService.findOneByEmail(signInDto.email);
 
@@ -34,18 +38,6 @@ export class AuthService {
     }
     return {
       user,
-    };
-  }
-
-  async refreshToken(userId: string) {
-    const user = await this.userService.findOneById(userId);
-
-    if (!user) {
-      throw new UnauthorizedException('Invalid email or password');
-    }
-    const accessToken = this.jwtService.sign({ userId: user.id });
-    return {
-      accessToken: accessToken,
     };
   }
 

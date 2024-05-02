@@ -14,12 +14,14 @@ export class UserController {
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }
+
   @UseGuards(JwtGuard, RolesGuard)
   @Get()
   @Roles(Role.ADMIN)
   findAll() {
     return this.userService.findAll();
   }
+
   @Get('test')
   findAl1l() {
     return this.userService.findAll();

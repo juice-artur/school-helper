@@ -5,6 +5,7 @@ import { CreateUserDto } from '../user/dto/create-user.dto';
 import { SignInDto } from './dto/SignInDto';
 import { AuthRequestHelper } from './utils/cookie-helper.service';
 import { JwtGuard } from './gaurds/jwt-auth.guard';
+import { UserDec } from '../decorators/user.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -35,5 +36,12 @@ export class AuthController {
   @Get('logout')
   async logout(@Res({ passthrough: true }) res: Response) {
     return this.requestHelper.clearJwtTokenFromCookie(res);
+  }
+
+  @UseGuards(JwtGuard)
+  @Get('get/me')
+  async getMe(@UserDec() user: any) {
+    console.log(user);
+    return this.authService.getUserById(user.id);
   }
 }
