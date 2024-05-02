@@ -35,7 +35,7 @@ export class AuthService {
     const token = this.jwtService.sign({ userId: user.id });
     const refreshToken = this.jwtService.sign(
       { userId: user.id },
-      { expiresIn: '7d', secret: `${process.env.JWT_REFRESH_SECRET}` },
+      { expiresIn: '365d', secret: `${process.env.JWT_REFRESH_SECRET}` },
     );
 
     return {
