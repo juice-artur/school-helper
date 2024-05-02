@@ -5,6 +5,7 @@ import { CreateUserDto } from '../user/dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { SignInDto } from './dto/SignInDto';
 
+export type JwtPayload = { sub?: string };
 @Injectable()
 export class AuthService {
   constructor(
@@ -31,17 +32,8 @@ export class AuthService {
     if (!isPasswordValid) {
       throw new UnauthorizedException('password');
     }
-
-    const token = this.jwtService.sign({ userId: user.id });
-    const refreshToken = this.jwtService.sign(
-      { userId: user.id },
-      { expiresIn: '365d', secret: `${process.env.JWT_REFRESH_SECRET}` },
-    );
-
     return {
       user,
-      accessToken: token,
-      refreshToken: refreshToken,
     };
   }
 
@@ -55,5 +47,30 @@ export class AuthService {
     return {
       accessToken: accessToken,
     };
+  }
+
+  async signJwtToken(id: string): Promise<string> {
+    const payload: JwtPayload = { sub: id };
+
+    const accessToken = await this.jwtService.signAsync(payload, {
+      expiresIn: '1d',
+    });
+
+    return accessToken;
+  }
+
+  jwtCloseToExpire(token: string): boolean {
+    const payload = this.jwtService.decode<JwtPayload & { exp: number }>(token);
+
+    if (!payload || !payload.sub || !payload.exp) return false;
+
+    const intervalLeft = payload.exp - Date.now() / 1000;
+
+    if (intervalLeft < 0) return false;
+
+    const isCloseToExpire =
+      intervalLeft < Number(process.env.JWT_EXPIRATION_TRESHOLD_SECONDS);
+
+    return isCloseToExpire;
   }
 }
