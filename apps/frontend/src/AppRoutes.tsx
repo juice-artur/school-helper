@@ -1,4 +1,6 @@
+import { CreateTaskPage } from './pages/CreateTaskPage';
 import { HomePage } from './pages/HomePage';
+import { SchoolsPage } from './pages/SchoolsPage';
 
 const AppRoutes = [
     {
@@ -7,11 +9,12 @@ const AppRoutes = [
     },
     {
         path: '/shools',  
-        element: <></>
+        element: <SchoolsPage/>
     },
     {
         path: '/blog',
-        element: <></>
+        element: 
+        <></>
     },
     {
         path: '/about',
@@ -20,6 +23,19 @@ const AppRoutes = [
     {
         path: '/contacts',
         element: <></>
+    },
+    {
+        path: '/create-task',
+        element: <CreateTaskPage/>
+    },
+    {
+
+    },
+    {
+
+    },
+    {
+
     },
     {
 

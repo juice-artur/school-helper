@@ -8,5 +8,6 @@ async function bootstrap() {
   const configService = app.get<ConfigService>(ConfigService);
   app.use(cookieParser());
   await app.listen(configService.get('BACKEND_PORT') || 3000);
+  
 }
 bootstrap();
