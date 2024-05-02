@@ -3,11 +3,10 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from '@prisma/client';
-import { RolesGuard } from 'src/auth/gaurds/roles.guard';
 import { JwtAuthGuard } from 'src/auth/gaurds/jwt-auth.guard';
+import { RolesGuard } from 'src/auth/gaurds/roles.guard';
 
 @Controller('user')
-@UseGuards(JwtAuthGuard, RolesGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -15,10 +14,14 @@ export class UserController {
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }
-
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get()
   @Roles(Role.ADMIN)
   findAll() {
+    return this.userService.findAll();
+  }
+  @Get('test')
+  findAl1l() {
     return this.userService.findAll();
   }
 }
