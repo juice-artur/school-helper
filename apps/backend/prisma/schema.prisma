@@ -17,7 +17,7 @@ enum Role {
   ADMIN
   TEACHER
   STUDENT
-  DIRECROR
+  DIRECTOR
 }
 
 model User {
@@ -28,7 +28,7 @@ model User {
   password  String?
   googleId  String?    @map("google_id")
   teachers  Teacher[]
-  students  Student[]
+  students  Student?
   school    School[]
   userRoles UserRole[]
 
@@ -45,12 +45,16 @@ model UserRole {
 }
 
 model School {
-  id      String  @id @default(uuid())
-  title   String
-  classes Class[]
+  id          String  @id @default(uuid())
+  title       String
+  description String
+  city        String
+  index       String
+  phone       String
+  classes     Class[]
 
-  adminId String @unique @map("admin_id")
-  admin   User   @relation(fields: [adminId], references: [id])
+  directorId String @unique @map("director_id")
+  director   User   @relation(fields: [directorId], references: [id])
 
   @@map("school")
 }
@@ -81,8 +85,8 @@ model Student {
   id      String   @id @default(uuid())
   userId  String   @unique @map("user_id")
   user    User     @relation(fields: [userId], references: [id])
-  classId String   @unique @map("class_id")
-  class   Class    @relation(fields: [classId], references: [id])
+  classId String?  @unique @map("class_id")
+  class   Class?   @relation(fields: [classId], references: [id])
   ratings Rating[]
 
   @@map("student")

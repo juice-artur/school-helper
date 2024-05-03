@@ -16,7 +16,7 @@ export class AuthController {
 
   @Post('signup')
   async signUp(@Body() createUserDto: CreateUserDto) {
-    return this.authService.signUp(createUserDto);
+    return this.authService.studentSignUp(createUserDto);
   }
 
   @Post('signin')
@@ -41,7 +41,6 @@ export class AuthController {
   @UseGuards(JwtGuard)
   @Get('get/me')
   async getMe(@UserDec() user: any) {
-    console.log(user);
     return this.authService.getUserById(user.id);
   }
 }

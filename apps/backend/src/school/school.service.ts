@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { CreateSchoolDto } from './dto/create-school.dto';
-import { UpdateSchoolDto } from './dto/update-school.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class SchoolService {
-  constructor(private readonly prismaService: PrismaService){}
-  create(createSchoolDto: CreateSchoolDto) {
-    return 'This action adds a new school';
+  constructor(private readonly prismaService: PrismaService) {}
+  async createSchool(createSchoolDto: CreateSchoolDto, directorId: string) {
+    return await this.prismaService.school.create({
+      data: { ...createSchoolDto, director: { connect: { id: directorId } } },
+    });
   }
 
   findAll() {
@@ -16,10 +17,6 @@ export class SchoolService {
 
   findOne(id: number) {
     return `This action returns a #${id} school`;
-  }
-
-  update(id: number, updateSchoolDto: UpdateSchoolDto) {
-    return `This action updates a #${id} school`;
   }
 
   remove(id: number) {

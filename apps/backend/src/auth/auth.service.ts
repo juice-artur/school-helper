@@ -13,8 +13,8 @@ export class AuthService {
     private readonly userService: UserService,
   ) {}
 
-  async signUp(createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  async studentSignUp(createUserDto: CreateUserDto) {
+    return this.userService.createStudent(createUserDto);
   }
 
   async getUserById(userId: string) {
