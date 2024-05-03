@@ -35,6 +35,10 @@ export class SchoolController {
 
   @UseGuards(JwtGuard)
   @Get()
+  @ApiOperation({ summary: 'Create school' })
+  @ApiOkResponse({
+    type: SchoolDto,
+  })
   findOne(@UserDec() user: any) {
     return this.schoolService.findOneByUserId(user.id);
   }
