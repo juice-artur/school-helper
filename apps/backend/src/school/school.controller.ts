@@ -20,20 +20,16 @@ export class SchoolController {
   constructor(private readonly schoolService: SchoolService) {}
 
   @UseGuards(JwtGuard, RolesGuard)
-  @Roles(Role.DIRECROR)
+  @Roles(Role.DIRECTOR)
   @Post()
   create(@Body() createSchoolDto: CreateSchoolDto, @UserDec() user: any) {
     return this.schoolService.createSchool(createSchoolDto, user.id);
   }
 
+  @UseGuards(JwtGuard)
   @Get()
-  findAll() {
-    return this.schoolService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.schoolService.findOne(+id);
+  findOne(@UserDec() user: any) {
+    return this.schoolService.findOneByUserId(user.id);
   }
 
   @Delete(':id')

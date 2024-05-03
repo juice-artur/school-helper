@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "Role" AS ENUM ('ADMIN', 'TEACHER', 'STUDENT', 'DIRECROR');
+CREATE TYPE "Role" AS ENUM ('ADMIN', 'TEACHER', 'STUDENT', 'DIRECTOR');
 
 -- CreateTable
 CREATE TABLE "user" (
@@ -9,16 +9,29 @@ CREATE TABLE "user" (
     "email" TEXT NOT NULL,
     "password" TEXT,
     "google_id" TEXT,
-    "role" "Role" NOT NULL,
+    "avatar_key" TEXT,
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "user_role" (
+    "id" TEXT NOT NULL,
+    "role" "Role" NOT NULL,
+    "user_id" TEXT NOT NULL,
+
+    CONSTRAINT "user_role_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "school" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
-    "admin_id" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "city" TEXT NOT NULL,
+    "index" TEXT NOT NULL,
+    "phone" TEXT NOT NULL,
+    "director_id" TEXT NOT NULL,
 
     CONSTRAINT "school_pkey" PRIMARY KEY ("id")
 );
@@ -45,7 +58,7 @@ CREATE TABLE "class" (
 CREATE TABLE "student" (
     "id" TEXT NOT NULL,
     "user_id" TEXT NOT NULL,
-    "class_id" TEXT NOT NULL,
+    "class_id" TEXT,
 
     CONSTRAINT "student_pkey" PRIMARY KEY ("id")
 );
@@ -102,7 +115,10 @@ CREATE TABLE "task_attachment" (
 CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "school_admin_id_key" ON "school"("admin_id");
+CREATE UNIQUE INDEX "user_role_user_id_key" ON "user_role"("user_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "school_director_id_key" ON "school"("director_id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "teacher_user_id_key" ON "teacher"("user_id");
@@ -138,7 +154,10 @@ CREATE UNIQUE INDEX "task_attachment_attachment_id_key" ON "task_attachment"("at
 CREATE UNIQUE INDEX "task_attachment_task_id_key" ON "task_attachment"("task_id");
 
 -- AddForeignKey
-ALTER TABLE "school" ADD CONSTRAINT "school_admin_id_fkey" FOREIGN KEY ("admin_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "user_role" ADD CONSTRAINT "user_role_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "school" ADD CONSTRAINT "school_director_id_fkey" FOREIGN KEY ("director_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "teacher" ADD CONSTRAINT "teacher_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -153,7 +172,7 @@ ALTER TABLE "class" ADD CONSTRAINT "class_homeroom_teacher_id_fkey" FOREIGN KEY 
 ALTER TABLE "student" ADD CONSTRAINT "student_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "student" ADD CONSTRAINT "student_class_id_fkey" FOREIGN KEY ("class_id") REFERENCES "class"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "student" ADD CONSTRAINT "student_class_id_fkey" FOREIGN KEY ("class_id") REFERENCES "class"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "rating" ADD CONSTRAINT "rating_student_id_fkey" FOREIGN KEY ("student_id") REFERENCES "student"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

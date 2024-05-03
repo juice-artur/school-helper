@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateSchoolDto } from './dto/create-school.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { NotFoundError } from 'rxjs';
 
 @Injectable()
 export class SchoolService {
@@ -11,14 +12,23 @@ export class SchoolService {
     });
   }
 
+  async findOneByUserId(id: string) {
+    const user = await this.prismaService.user.findUnique({
+      where: { id: id },
+      include: { school: true },
+    });
+    if (!user || !user.school) {
+      throw NotFoundError;
+    }
+
+    return await this.prismaService.school.findUnique({
+      where: { id: user.school[0].id },
+    });
+  }
+
   findAll() {
     return `This action returns all school`;
   }
-
-  findOne(id: number) {
-    return `This action returns a #${id} school`;
-  }
-
   remove(id: number) {
     return `This action removes a #${id} school`;
   }
