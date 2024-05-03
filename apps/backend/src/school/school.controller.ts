@@ -14,6 +14,8 @@ import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from '@prisma/client';
 import { UserDec } from 'src/decorators/user.decorator';
 import { JwtGuard } from 'src/auth/gaurds/jwt-auth.guard';
+import { ApiOperation, ApiOkResponse, ApiBody } from '@nestjs/swagger';
+import { SchoolDto } from './dto/school.dto';
 
 @Controller('school')
 export class SchoolController {
@@ -21,6 +23,11 @@ export class SchoolController {
 
   @UseGuards(JwtGuard, RolesGuard)
   @Roles(Role.DIRECTOR)
+  @ApiOperation({ summary: 'Create school' })
+  @ApiOkResponse({
+    type: SchoolDto,
+  })
+  @ApiBody({ type: CreateSchoolDto })
   @Post()
   create(@Body() createSchoolDto: CreateSchoolDto, @UserDec() user: any) {
     return this.schoolService.createSchool(createSchoolDto, user.id);

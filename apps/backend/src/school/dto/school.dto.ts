@@ -1,6 +1,12 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-export class CreateSchoolDto {
+export class SchoolDto {
+  @ApiProperty({
+    description: 'Unique identifier for the school',
+    example: '12345678-1234-1234-1234-123456789012',
+  })
+  id: string;
+
   @ApiProperty({
     description: 'Title of the school',
     example: 'Greenwood High School',
@@ -27,4 +33,10 @@ export class CreateSchoolDto {
     example: '+1-555-555-5555',
   })
   phone: string;
+
+  @ApiProperty({
+    description: 'ID of the school director',
+    example: '12345678-1234-1234-1234-123456789012',
+  })
+  directorId: string;
 }

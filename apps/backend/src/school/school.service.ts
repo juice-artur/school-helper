@@ -2,11 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { CreateSchoolDto } from './dto/create-school.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { NotFoundError } from 'rxjs';
+import { SchoolDto } from './dto/school.dto';
 
 @Injectable()
 export class SchoolService {
   constructor(private readonly prismaService: PrismaService) {}
-  async createSchool(createSchoolDto: CreateSchoolDto, directorId: string) {
+  async createSchool(
+    createSchoolDto: CreateSchoolDto,
+    directorId: string,
+  ): Promise<SchoolDto> {
     return await this.prismaService.school.create({
       data: { ...createSchoolDto, director: { connect: { id: directorId } } },
     });
