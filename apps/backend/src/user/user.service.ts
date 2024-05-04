@@ -88,9 +88,7 @@ export class UserService {
     }
 
     const hashedPassword = await bcrypt.hash(activateTeacherDto.password!, 10);
-    this.prismaService.verificationToken.delete({
-      where: { token: activateTeacherDto.verificationToken },
-    });
+    this.deleteVerificationToken(activateTeacherDto.verificationToken!);
 
     return this.prismaService.user.update({
       where: { id: userId },
@@ -110,6 +108,27 @@ export class UserService {
       });
 
     return verificationToken?.userId ? verificationToken?.userId : null;
+  }
+
+  async deleteVerificationToken(token: string): Promise<void> {
+    const tokenExists = await this.prismaService.verificationToken.findUnique({
+      where: { token },
+    });
+
+    if (!tokenExists) {
+      console.error(`Verification token ${token} not found`);
+      throw new NotFoundException('Verification token not found');
+    }
+
+    try {
+      await this.prismaService.verificationToken.deleteMany({
+        where: { token },
+      });
+      console.log(`Verification token ${token} deleted successfully`);
+    } catch (error) {
+      console.error(`Error deleting verification token ${token}:`, error);
+      throw new Error(`Failed to delete verification token ${token}`);
+    }
   }
 
   async findOneByEmail(email: string): Promise<User | null> {
