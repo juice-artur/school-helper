@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { SchoolModule } from './school/school.module';
 import { FileModule } from './file/file.module';
+import { VerificationTokenModule } from './verification-token/verification-token.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { FileModule } from './file/file.module';
     AuthModule,
     SchoolModule,
     FileModule,
+    VerificationTokenModule,
   ],
   controllers: [AppController],
   providers: [AppService],

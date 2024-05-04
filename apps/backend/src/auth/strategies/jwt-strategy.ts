@@ -27,6 +27,9 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     if (!payload || !payload.sub) return null;
 
     const user = await this.userService.findOneById(payload.sub);
+    if (user && !user.isActive) {
+      return;
+    }
 
     if (user) await this.prolongTokenLifeIfNeeded(user.id, req);
 

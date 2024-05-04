@@ -4,6 +4,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
 import { Role, User } from '@prisma/client';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateTeacherDto } from './dto/create-teacher.dto';
 
 @Injectable()
 export class UserService {
@@ -36,6 +37,7 @@ export class UserService {
         ...createUserDto,
         password: hashedPassword,
         userRoles: { create: { role: Role.STUDENT } },
+        isActive: true,
       },
     });
 
@@ -48,6 +50,52 @@ export class UserService {
     } catch (error) {
       console.error('Failed to create student:', error);
       throw new Error('Student creation failed');
+    }
+
+    return user;
+  }
+
+  async createTeacher(createTeacherDto: CreateTeacherDto): Promise<User> {
+    const user = await this.prismaService.user.create({
+      data: {
+        ...createTeacherDto,
+        userRoles: { create: { role: Role.TEACHER } },
+        isActive: false,
+      },
+    });
+
+    try {
+      await this.prismaService.teacher.create({
+        data: {
+          user: { connect: { id: user.id } },
+        },
+      });
+    } catch (error) {
+      console.error('Failed to create teacher:', error);
+      throw new Error('Teacher creation failed');
+    }
+
+    return user;
+  }
+
+  async activateTeacher(createTeacherDto: CreateTeacherDto): Promise<User> {
+    const user = await this.prismaService.user.create({
+      data: {
+        ...createTeacherDto,
+        userRoles: { create: { role: Role.TEACHER } },
+        isActive: false,
+      },
+    });
+
+    try {
+      await this.prismaService.teacher.create({
+        data: {
+          user: { connect: { id: user.id } },
+        },
+      });
+    } catch (error) {
+      console.error('Failed to create teacher:', error);
+      throw new Error('Teacher creation failed');
     }
 
     return user;
