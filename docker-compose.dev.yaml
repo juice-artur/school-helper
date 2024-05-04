@@ -13,6 +13,16 @@ services:
     ports:
       - ${POSTGRES_PORT}:5432
 
+  minio:
+    restart: always
+    image: bitnami/minio:latest
+    environment:
+      MINIO_ROOT_USER: ${MINIO_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_PASSWORD}
+    ports:
+      - 9000:9000
+      - 9001:9001
+
   pgadmin:
     container_name: PGAdmin4
     image: dpage/pgadmin4
