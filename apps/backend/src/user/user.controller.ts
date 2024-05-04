@@ -10,6 +10,7 @@ import { CreateTeacherDto } from './dto/create-teacher.dto';
 import { ApiOperation, ApiOkResponse, ApiBody } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/create-user.dto';
 import { VerificationTokenService } from 'src/verification-token/verification-token.service';
+import { ActivateTeacherDto } from './dto/activate-teacher.dto';
 
 @Controller('user')
 export class UserController {
@@ -48,11 +49,8 @@ export class UserController {
   })
   @ApiBody({ type: CreateUserDto })
   @Post('activate/teacher')
-  async activateTeacher(@Body() createTeacherDto: CreateTeacherDto) {
-    const user = await this.userService.createTeacher(createTeacherDto);
-    const token = await this.verificationTokenService.create(user.id);
-    console.log(token);
-    return user;
+  async activateTeacher(@Body() createTeacherDto: ActivateTeacherDto) {
+    return this.userService.activateTeacher(createTeacherDto);
   }
 
   @UseGuards(JwtGuard)

@@ -5,6 +5,7 @@ import * as bcrypt from 'bcrypt';
 import { Role, User } from '@prisma/client';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateTeacherDto } from './dto/create-teacher.dto';
+import { ActivateTeacherDto } from './dto/activate-teacher.dto';
 
 @Injectable()
 export class UserService {
@@ -78,27 +79,37 @@ export class UserService {
     return user;
   }
 
-  async activateTeacher(createTeacherDto: CreateTeacherDto): Promise<User> {
-    const user = await this.prismaService.user.create({
-      data: {
-        ...createTeacherDto,
-        userRoles: { create: { role: Role.TEACHER } },
-        isActive: false,
-      },
-    });
-
-    try {
-      await this.prismaService.teacher.create({
-        data: {
-          user: { connect: { id: user.id } },
-        },
-      });
-    } catch (error) {
-      console.error('Failed to create teacher:', error);
-      throw new Error('Teacher creation failed');
+  async activateTeacher(activateTeacherDto: ActivateTeacherDto): Promise<User> {
+    const userId = await this.findUserIdByveVificationToken(
+      activateTeacherDto.verificationToken!,
+    );
+    if (!userId) {
+      throw new NotFoundException();
     }
 
-    return user;
+    const hashedPassword = await bcrypt.hash(activateTeacherDto.password!, 10);
+    this.prismaService.verificationToken.delete({
+      where: { token: activateTeacherDto.verificationToken },
+    });
+
+    return this.prismaService.user.update({
+      where: { id: userId },
+      data: {
+        firstName: activateTeacherDto.firstName,
+        lastName: activateTeacherDto.lastName,
+        password: hashedPassword,
+        isActive: true,
+      },
+    });
+  }
+
+  async findUserIdByveVificationToken(token: string): Promise<string | null> {
+    const verificationToken =
+      await this.prismaService.verificationToken.findUnique({
+        where: { token: token },
+      });
+
+    return verificationToken?.userId ? verificationToken?.userId : null;
   }
 
   async findOneByEmail(email: string): Promise<User | null> {
