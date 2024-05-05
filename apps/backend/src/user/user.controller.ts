@@ -11,12 +11,14 @@ import { ApiOperation, ApiOkResponse, ApiBody } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/create-user.dto';
 import { VerificationTokenService } from 'src/verification-token/verification-token.service';
 import { ActivateTeacherDto } from './dto/activate-teacher.dto';
+import { MailService } from 'src/mail/mail.service';
 
 @Controller('user')
 export class UserController {
   constructor(
     private readonly userService: UserService,
     private readonly verificationTokenService: VerificationTokenService,
+    private readonly mailService: MailService,
   ) {}
 
   @UseGuards(JwtGuard, RolesGuard)
@@ -56,6 +58,7 @@ export class UserController {
   @UseGuards(JwtGuard)
   @Patch()
   updateUser(@UserDec() user: any, @Body() updateUserDto: UpdateUserDto) {
+    this.mailService.sendMail().then((res) => console.log(res));
     return this.userService.updateUser(user.id, updateUserDto);
   }
 }
