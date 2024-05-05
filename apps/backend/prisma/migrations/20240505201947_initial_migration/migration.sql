@@ -4,14 +4,24 @@ CREATE TYPE "Role" AS ENUM ('ADMIN', 'TEACHER', 'STUDENT', 'DIRECTOR');
 -- CreateTable
 CREATE TABLE "user" (
     "id" TEXT NOT NULL,
-    "first_name" TEXT NOT NULL,
-    "last_name" TEXT NOT NULL,
+    "first_name" TEXT,
+    "last_name" TEXT,
     "email" TEXT NOT NULL,
     "password" TEXT,
     "google_id" TEXT,
     "avatar_key" TEXT,
+    "is_active" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "verification_token" (
+    "id" TEXT NOT NULL,
+    "user_id" TEXT NOT NULL,
+    "token" TEXT NOT NULL,
+
+    CONSTRAINT "verification_token_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -72,23 +82,11 @@ CREATE TABLE "subject" (
 );
 
 -- CreateTable
-CREATE TABLE "rating" (
-    "id" TEXT NOT NULL,
-    "title" TEXT NOT NULL,
-    "student_id" TEXT NOT NULL,
-    "class_id" TEXT NOT NULL,
-    "subject_id" TEXT NOT NULL,
-    "grade" INTEGER NOT NULL,
-    "task_id" TEXT NOT NULL,
-
-    CONSTRAINT "rating_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "task" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
+    "ratings" TEXT NOT NULL,
     "subject_id" TEXT NOT NULL,
 
     CONSTRAINT "task_pkey" PRIMARY KEY ("id")
@@ -115,6 +113,12 @@ CREATE TABLE "task_attachment" (
 CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "verification_token_user_id_key" ON "verification_token"("user_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "verification_token_token_key" ON "verification_token"("token");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "user_role_user_id_key" ON "user_role"("user_id");
 
 -- CreateIndex
@@ -133,18 +137,6 @@ CREATE UNIQUE INDEX "student_user_id_key" ON "student"("user_id");
 CREATE UNIQUE INDEX "student_class_id_key" ON "student"("class_id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "rating_student_id_key" ON "rating"("student_id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "rating_class_id_key" ON "rating"("class_id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "rating_subject_id_key" ON "rating"("subject_id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "rating_task_id_key" ON "rating"("task_id");
-
--- CreateIndex
 CREATE UNIQUE INDEX "task_subject_id_key" ON "task"("subject_id");
 
 -- CreateIndex
@@ -152,6 +144,9 @@ CREATE UNIQUE INDEX "task_attachment_attachment_id_key" ON "task_attachment"("at
 
 -- CreateIndex
 CREATE UNIQUE INDEX "task_attachment_task_id_key" ON "task_attachment"("task_id");
+
+-- AddForeignKey
+ALTER TABLE "verification_token" ADD CONSTRAINT "verification_token_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "user_role" ADD CONSTRAINT "user_role_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -173,18 +168,6 @@ ALTER TABLE "student" ADD CONSTRAINT "student_user_id_fkey" FOREIGN KEY ("user_i
 
 -- AddForeignKey
 ALTER TABLE "student" ADD CONSTRAINT "student_class_id_fkey" FOREIGN KEY ("class_id") REFERENCES "class"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "rating" ADD CONSTRAINT "rating_student_id_fkey" FOREIGN KEY ("student_id") REFERENCES "student"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "rating" ADD CONSTRAINT "rating_class_id_fkey" FOREIGN KEY ("class_id") REFERENCES "class"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "rating" ADD CONSTRAINT "rating_subject_id_fkey" FOREIGN KEY ("subject_id") REFERENCES "subject"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "rating" ADD CONSTRAINT "rating_task_id_fkey" FOREIGN KEY ("task_id") REFERENCES "task"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "task" ADD CONSTRAINT "task_subject_id_fkey" FOREIGN KEY ("subject_id") REFERENCES "subject"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

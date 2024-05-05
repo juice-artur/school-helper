@@ -28,7 +28,7 @@ model User {
   password  String?
   googleId  String? @map("google_id")
   avatarKey String? @map("avatar_key")
-  isActive  Boolean @map("is_active") @default(false)
+  isActive  Boolean @default(false) @map("is_active")
 
   VerificationToken VerificationToken?
   teachers          Teacher[]
@@ -94,19 +94,19 @@ model Class {
 }
 
 model Student {
-  id      String   @id @default(uuid())
-  userId  String   @unique @map("user_id")
-  user    User     @relation(fields: [userId], references: [id])
-  classId String?  @unique @map("class_id")
-  class   Class?   @relation(fields: [classId], references: [id])
+  id      String  @id @default(uuid())
+  userId  String  @unique @map("user_id")
+  user    User    @relation(fields: [userId], references: [id])
+  classId String? @unique @map("class_id")
+  class   Class?  @relation(fields: [classId], references: [id])
 
   @@map("student")
 }
 
 model Subject {
-  id      String   @id @default(uuid())
-  title   String
-  task    Task[]
+  id    String @id @default(uuid())
+  title String
+  task  Task[]
 
   @@map("subject")
 }
