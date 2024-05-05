@@ -1,28 +1,29 @@
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule, ConfigType } from '@nestjs/config';
 import { join } from 'path';
+import mail from '../config/mail';
 import { MailService } from './mail.service';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule,
     MailerModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
+      useFactory: async (mailConfig: ConfigType<typeof mail>) => ({
         transport: {
-          host: configService.get<string>('MAIL_HOST') as string,
-          port: configService.get<number>('MAIL_PORT') as number,
-          secure: false,
+          host: mailConfig.MAIL_HOST,
+          port: mailConfig.MAIL_PORT,
+          secure: mailConfig.MAIL_SECURE,
           auth: {
-            user: configService.get<string>('MAIL_USER') as string,
-            pass: configService.get<string>('MAIL_PASS') as string,
+            user: mailConfig.MAIL_USER,
+            pass: mailConfig.MAIL_PASS,
           },
         },
         defaults: {
           from: {
-            address: configService.get<string>('MAIL_FROM') as string,
+            address: mailConfig.MAIL_FROM,
             name: 'No Reply',
           },
         },
@@ -32,7 +33,7 @@ import { MailService } from './mail.service';
           options: { strict: true },
         },
       }),
-      inject: [ConfigService],
+      inject: [mail.KEY],
     }),
   ],
   providers: [MailService],

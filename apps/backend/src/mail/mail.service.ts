@@ -1,28 +1,26 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
+import { ConfigType } from '@nestjs/config';
+import config from '../config/appconfig';
 
 @Injectable()
 export class MailService {
-  constructor(private readonly mailerService: MailerService) {}
+  constructor(
+    private readonly mailerService: MailerService,
+    @Inject(config.KEY)
+    private readonly configObject: ConfigType<typeof config>,
+  ) {}
 
-  async sendMail() {
-    try {
-      await this.mailerService.sendMail({
-        to: 'school.helper@gmail.com',
-        from: '"Welcome to the fold" <linux@over.windows>',
-        subject: 'Quotes',
-        text: '',
-        html: `<p>How many programmers does it take to change a light bulb? 
-               None, that’s a hardware problem.</p>`,
-      });
-      return {
-        success: true,
-      };
-    } catch (error) {
-      console.log(error);
-      return {
-        success: false,
-      };
-    }
+  async sendverificationMail(verificationToken: string, email: string) {
+    const confirmation_url = `${this.configObject.FRONTEND_URL}/registration/?token=${verificationToken}`;
+    await this.mailerService.sendMail({
+      to: email,
+      from: '"Support Team" <support@example.com>',
+      subject: 'Welcome to SchoolHelper! Confirm your Email',
+      template: './teacher-activate-account',
+      context: {
+        confirmation_url,
+      },
+    });
   }
 }

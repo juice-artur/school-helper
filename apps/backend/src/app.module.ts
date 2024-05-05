@@ -8,10 +8,12 @@ import { SchoolModule } from './school/school.module';
 import { FileModule } from './file/file.module';
 import { VerificationTokenModule } from './verification-token/verification-token.module';
 import { MailModule } from './mail/mail.module';
+import mail from './config/mail';
+import app_config from './config/appconfig';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({ isGlobal: true, load: [mail, app_config] }),
     UserModule,
     AuthModule,
     SchoolModule,

@@ -89,7 +89,6 @@ model Class {
   students          Student[]
   homeroomTeacherId String    @map("homeroom_teacher_id")
   homeroomTeacher   Teacher   @relation(fields: [homeroomTeacherId], references: [id])
-  ratings           Rating[]
 
   @@map("class")
 }
@@ -100,7 +99,6 @@ model Student {
   user    User     @relation(fields: [userId], references: [id])
   classId String?  @unique @map("class_id")
   class   Class?   @relation(fields: [classId], references: [id])
-  ratings Rating[]
 
   @@map("student")
 }
@@ -108,33 +106,16 @@ model Student {
 model Subject {
   id      String   @id @default(uuid())
   title   String
-  ratings Rating[]
   task    Task[]
 
   @@map("subject")
-}
-
-model Rating {
-  id         String  @id @default(uuid())
-  title      String
-  stdudentId String  @unique @map("student_id")
-  student    Student @relation(fields: [stdudentId], references: [id])
-  classId    String  @unique @map("class_id")
-  class      Class   @relation(fields: [classId], references: [id])
-  subjectId  String  @unique @map("subject_id")
-  subject    Subject @relation(fields: [subjectId], references: [id])
-  grade      Int
-  taskId     String  @unique @map("task_id")
-  task       Task    @relation(fields: [taskId], references: [id])
-
-  @@map("rating")
 }
 
 model Task {
   id          String           @id @default(uuid())
   title       String
   description String
-  ratings     Rating[]
+  ratings     String
   subjectId   String           @unique @map("subject_id")
   subject     Subject          @relation(fields: [subjectId], references: [id])
   attachments TaskAttachment[]

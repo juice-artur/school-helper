@@ -39,7 +39,7 @@ export class UserController {
   async createTeacher(@Body() createTeacherDto: CreateTeacherDto) {
     const user = await this.userService.createTeacher(createTeacherDto);
     const token = await this.verificationTokenService.create(user.id);
-    console.log(token);
+    this.mailService.sendverificationMail(token, createTeacherDto.email);
     return user;
   }
 
@@ -58,7 +58,6 @@ export class UserController {
   @UseGuards(JwtGuard)
   @Patch()
   updateUser(@UserDec() user: any, @Body() updateUserDto: UpdateUserDto) {
-    this.mailService.sendMail().then((res) => console.log(res));
     return this.userService.updateUser(user.id, updateUserDto);
   }
 }
