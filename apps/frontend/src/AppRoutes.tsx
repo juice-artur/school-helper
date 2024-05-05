@@ -1,6 +1,8 @@
 import { CreateTaskPage } from './pages/CreateTaskPage';
 import { HomePage } from './pages/HomePage';
+import { RegistrationPage } from './pages/RegistrationPage';
 import { SchoolsPage } from './pages/SchoolsPage';
+import { UserPage } from './pages/UserPage';
 
 const AppRoutes = [
     {
@@ -29,10 +31,12 @@ const AppRoutes = [
         element: <CreateTaskPage/>
     },
     {
-
+        path: '/user',
+        element: <UserPage/>
     },
     {
-
+        path: '/registration',
+        element: <RegistrationPage/>
     },
     {
 

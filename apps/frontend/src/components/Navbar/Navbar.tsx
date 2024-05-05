@@ -1,15 +1,44 @@
+import React, { useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import Logo from '../../assets/img/Logo image.svg'
 import { Link, useLocation } from 'react-router-dom';
 import { AuthPopup } from '../AuthPopup/AuthPopup';
+import Logo from '../../assets/img/Logo image.svg';
+import UserImage from '../../assets/img/Account image.svg'
+import { imageListClasses } from '@mui/material';
 
 export const Navbar = () => {
-  const location: string = useLocation().pathname;
+  const location = useLocation().pathname;
 
+  const [isAuthorithed, setIsAuthorithed] = useState<boolean>(false);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`http://localhost:3005/auth/getme`, {
+        method: "GET",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      });
+      const res = await response.json();
+      console.log(res);
+
+      if (response.ok) {
+        setIsAuthorithed(true);
+      } else {
+        setIsAuthorithed(false);
+      }
+    } catch (error) {
+      console.error('Fetch error:', error);
+      setIsAuthorithed(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <AppBar position="static" color='transparent' sx={{height:'80px', margin: '0px auto', padding: '40px 0', alignItems:'center', justifyContent: 'center', 
@@ -36,13 +65,15 @@ export const Navbar = () => {
                 <Typography variant='h3' textAlign="center" padding={'10px'}>Контакти</Typography>
             </Link>
           </Box>
-          {/* <Button sx={{maxWidth: '210px', backgroundColor: '#423A34', borderRadius: '50px', color:'white', padding: '18px 84px', textTransform: 'none'}}>
-            <Typography variant='h3'>Вхід</Typography>
-          </Button>  */}
-          <AuthPopup/>
+          {isAuthorithed ? (
+            <AuthPopup/>
+          ) : 
+          <Link to='/user'>
+          <img src={UserImage} alt="" style={{width: '35px', cursor: 'pointer'}}/>
+          </Link>
+          }
         </Box>
       </Container>
-
     </AppBar>
   );
-}
+};
