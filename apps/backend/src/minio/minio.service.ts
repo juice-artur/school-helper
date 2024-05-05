@@ -41,6 +41,27 @@ export class MinioService {
 
     if (!isBucketExist) {
       await this.minioClient.makeBucket(this.bucketName);
+      const policy = {
+        Version: '2012-10-17',
+        Statement: [
+          {
+            Effect: 'Allow',
+            Principal: {
+              AWS: ['*'],
+            },
+            Action: ['s3:GetObject'],
+            Resource: [
+              `arn:aws:s3:::${this.configService.get('MINIO_BUCKET_NAME')}`,
+              `arn:aws:s3:::${this.configService.get('MINIO_BUCKET_NAME')}/*`,
+            ],
+          },
+        ],
+      };
+
+      await this.minioClient.setBucketPolicy(
+        this.bucketName,
+        JSON.stringify(policy),
+      );
     }
   }
 
@@ -60,7 +81,7 @@ export class MinioService {
 
     const url = await this.getFileByName(fileName);
 
-    return plainToInstance(ResponseFileDto, { name: fileName, url });
+    return plainToInstance(ResponseFileDto, { url });
   }
 
   async getFileByName(name: string): Promise<ResponseFileDto> {
