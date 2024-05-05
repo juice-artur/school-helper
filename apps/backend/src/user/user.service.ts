@@ -56,6 +56,21 @@ export class UserService {
     return user;
   }
 
+  async createDirector(createUserDto: CreateUserDto): Promise<User> {
+    const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+
+    const user = await this.prismaService.user.create({
+      data: {
+        ...createUserDto,
+        password: hashedPassword,
+        userRoles: { create: { role: Role.DIRECTOR } },
+        isActive: false,
+      },
+    });
+
+    return user;
+  }
+
   async createTeacher(createTeacherDto: CreateTeacherDto): Promise<User> {
     const user = await this.prismaService.user.create({
       data: {

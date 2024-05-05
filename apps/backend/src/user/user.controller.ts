@@ -34,7 +34,7 @@ export class UserController {
   @ApiOkResponse({
     type: CreateUserDto,
   })
-  @ApiBody({ type: CreateUserDto })
+  @ApiBody({ type: CreateTeacherDto })
   @Post('create/teacher')
   async createTeacher(@Body() createTeacherDto: CreateTeacherDto) {
     const user = await this.userService.createTeacher(createTeacherDto);
@@ -45,11 +45,11 @@ export class UserController {
 
   @UseGuards(JwtGuard, RolesGuard)
   @Roles(Role.DIRECTOR)
-  @ApiOperation({ summary: 'Create teacher' })
+  @ApiOperation({ summary: 'Activate teacher' })
   @ApiOkResponse({
-    type: CreateUserDto,
+    type: ActivateTeacherDto,
   })
-  @ApiBody({ type: CreateUserDto })
+  @ApiBody({ type: ActivateTeacherDto })
   @Post('activate/teacher')
   async activateTeacher(@Body() createTeacherDto: ActivateTeacherDto) {
     return this.userService.activateTeacher(createTeacherDto);

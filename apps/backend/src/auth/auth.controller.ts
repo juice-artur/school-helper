@@ -25,6 +25,16 @@ export class AuthController {
     return this.authService.studentSignUp(createUserDto);
   }
 
+  @Post('signup/director')
+  @ApiOperation({ summary: 'Create user' })
+  @ApiOkResponse({
+    type: CreateUserDto,
+  })
+  @ApiBody({ type: CreateUserDto })
+  async directorSignUp(@Body() createUserDto: CreateUserDto) {
+    return this.authService.directorSignUp(createUserDto);
+  }
+
   @Post('signin')
   @ApiOperation({ summary: 'Signin user' })
   @ApiBody({ type: SignInDto })
