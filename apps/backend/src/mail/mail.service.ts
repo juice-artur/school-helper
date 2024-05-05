@@ -23,4 +23,16 @@ export class MailService {
       },
     });
   }
+
+  async sendDirectorWasCreatedMail(userId: string) {
+    await this.mailerService.sendMail({
+      to: `${this.configObject.ADMIN_EMAIL}`,
+      from: '"Support Team" <support@example.com>',
+      subject: 'SchoolHelper! Director was added',
+      template: './director-acount-needed-activate',
+      context: {
+        user_id: userId,
+      },
+    });
+  }
 }

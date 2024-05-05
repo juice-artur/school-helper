@@ -7,12 +7,14 @@ import { AuthRequestHelper } from './utils/cookie-helper.service';
 import { JwtGuard } from './gaurds/jwt-auth.guard';
 import { UserDec } from '../decorators/user.decorator';
 import { ApiOperation, ApiOkResponse, ApiBody } from '@nestjs/swagger';
+import { MailService } from 'src/mail/mail.service';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly requestHelper: AuthRequestHelper,
+    private readonly mailService: MailService,
   ) {}
 
   @Post('signup')
@@ -32,7 +34,9 @@ export class AuthController {
   })
   @ApiBody({ type: CreateUserDto })
   async directorSignUp(@Body() createUserDto: CreateUserDto) {
-    return this.authService.directorSignUp(createUserDto);
+    const user = await this.authService.directorSignUp(createUserDto);
+    this.mailService.sendDirectorWasCreatedMail(user.id);
+    return user;
   }
 
   @Post('signin')

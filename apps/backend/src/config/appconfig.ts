@@ -7,6 +7,10 @@ class BaseConfig {
   @Expose()
   @IsString()
   FRONTEND_URL: string;
+
+  @Expose()
+  @IsString()
+  ADMIN_EMAIL: string;
 }
 
 export default registerAs('app_config', () => {
