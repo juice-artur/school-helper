@@ -6,7 +6,7 @@ import { SignInDto } from './dto/SignInDto';
 import { AuthRequestHelper } from './utils/cookie-helper.service';
 import { JwtGuard } from './gaurds/jwt-auth.guard';
 import { UserDec } from '../decorators/user.decorator';
-import { ApiOperation, ApiOkResponse, ApiBody, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiOkResponse, ApiBody, ApiTags, ApiCookieAuth } from '@nestjs/swagger';
 import { MailService } from 'src/mail/mail.service';
 
 @ApiTags('Auth Endpoints')
@@ -41,6 +41,7 @@ export class AuthController {
   }
 
   @Post('signin')
+  @ApiCookieAuth('jwt')
   @ApiOperation({ summary: 'Signin user' })
   @ApiBody({ type: SignInDto })
   async signIn(
