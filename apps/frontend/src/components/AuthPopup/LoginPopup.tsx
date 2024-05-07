@@ -22,7 +22,8 @@ export const LoginPopup = () => {
         // formData.append('email', email);
         // formData.append('password', password);
         // console.log(formState)
-        const response = await fetch(`http://localhost:3005/auth/signin`, {
+        const baseUrl =  import.meta.env.VITE_BACKEND_API_URL
+        const response = await fetch(`${baseUrl}/auth/signin`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'

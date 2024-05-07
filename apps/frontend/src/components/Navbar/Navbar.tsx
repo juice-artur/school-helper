@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -7,16 +7,17 @@ import { Link, useLocation } from 'react-router-dom';
 import { AuthPopup } from '../AuthPopup/AuthPopup';
 import Logo from '../../assets/img/Logo image.svg';
 import UserImage from '../../assets/img/Account image.svg'
-import { imageListClasses } from '@mui/material';
 
 export const Navbar = () => {
   const location = useLocation().pathname;
 
-  const [isAuthorithed, setIsAuthorithed] = useState<boolean>(false);
+  const [isAuthorized, setIsAuthorized] = useState<boolean>(false);
 
   const fetchData = async () => {
+    
     try {
-      const response = await fetch(`http://localhost:3005/auth/getme`, {
+      const baseUrl =  import.meta.env.VITE_BACKEND_API_URL
+      const response = await fetch(`${baseUrl}/auth/get/me`, {
         method: "GET",
         headers: {
           'Content-Type': 'application/json'
@@ -26,13 +27,13 @@ export const Navbar = () => {
       console.log(res);
 
       if (response.ok) {
-        setIsAuthorithed(true);
+        setIsAuthorized(true);
       } else {
-        setIsAuthorithed(false);
+        setIsAuthorized(false);
       }
     } catch (error) {
       console.error('Fetch error:', error);
-      setIsAuthorithed(false);
+      setIsAuthorized(false);
     }
   };
 
@@ -65,7 +66,7 @@ export const Navbar = () => {
                 <Typography variant='h3' textAlign="center" padding={'10px'}>Контакти</Typography>
             </Link>
           </Box>
-          {isAuthorithed ? (
+          {isAuthorized ? (
             <AuthPopup/>
           ) : 
           <Link to='/user'>

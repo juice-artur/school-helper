@@ -21,9 +21,10 @@ export const RegisterPopup = (backToLoginPopup:any) => {
     });
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        const baseUrl =  import.meta.env.VITE_BACKEND_API_URL
         event.preventDefault();
             console.log(formState)
-        const response = await fetch(`http://localhost:3005/auth/signup`, {
+        const response = await fetch(`${baseUrl}/auth/signup`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'

@@ -24,7 +24,8 @@ export const RegistrationPage = () => {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
             console.log(formState)
-        const response = await fetch(`http://localhost:3005/user/activate/teacher`, {
+            const baseUrl =  import.meta.env.VITE_BACKEND_API_URL
+        const response = await fetch(`${baseUrl}/user/activate/teacher`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
