@@ -7,12 +7,13 @@ import { RolesGuard } from 'src/auth/gaurds/roles.guard';
 import { UserDec } from 'src/decorators/user.decorator';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateTeacherDto } from './dto/create-teacher.dto';
-import { ApiOperation, ApiOkResponse, ApiBody } from '@nestjs/swagger';
+import { ApiOperation, ApiOkResponse, ApiBody, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/create-user.dto';
 import { VerificationTokenService } from 'src/verification-token/verification-token.service';
 import { ActivateTeacherDto } from './dto/activate-teacher.dto';
 import { MailService } from 'src/mail/mail.service';
 
+@ApiTags('User Endpoints')
 @Controller('user')
 export class UserController {
   constructor(
@@ -36,8 +37,14 @@ export class UserController {
   })
   @ApiBody({ type: CreateTeacherDto })
   @Post('create/teacher')
-  async createTeacher(@Body() createTeacherDto: CreateTeacherDto) {
-    const user = await this.userService.createTeacher(createTeacherDto);
+  async createTeacher(
+    @UserDec() director: any,
+    @Body() createTeacherDto: CreateTeacherDto,
+  ) {
+    const user = await this.userService.createTeacher(
+      createTeacherDto,
+      director.id,
+    );
     const token = await this.verificationTokenService.create(user.id);
     this.mailService.sendverificationMail(token, createTeacherDto.email);
     return user;

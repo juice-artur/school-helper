@@ -14,9 +14,10 @@ import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from '@prisma/client';
 import { UserDec } from 'src/decorators/user.decorator';
 import { JwtGuard } from 'src/auth/gaurds/jwt-auth.guard';
-import { ApiOperation, ApiOkResponse, ApiBody } from '@nestjs/swagger';
+import { ApiOperation, ApiOkResponse, ApiBody, ApiTags } from '@nestjs/swagger';
 import { SchoolDto } from './dto/school.dto';
 
+@ApiTags('School Endpoints')
 @Controller('school')
 export class SchoolController {
   constructor(private readonly schoolService: SchoolService) {}

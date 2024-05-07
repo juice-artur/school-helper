@@ -8,6 +8,7 @@ import { SchoolModule } from './school/school.module';
 import { FileModule } from './file/file.module';
 import { VerificationTokenModule } from './verification-token/verification-token.module';
 import { MailModule } from './mail/mail.module';
+import { ClassModule } from './class/class.module';
 import mail from './config/mail';
 import app_config from './config/appconfig';
 
@@ -20,6 +21,7 @@ import app_config from './config/appconfig';
     FileModule,
     VerificationTokenModule,
     MailModule,
+    ClassModule,
   ],
   controllers: [AppController],
   providers: [AppService],

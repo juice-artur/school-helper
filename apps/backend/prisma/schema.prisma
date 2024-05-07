@@ -33,7 +33,7 @@ model User {
   VerificationToken VerificationToken?
   teachers          Teacher[]
   students          Student?
-  school            School[]
+  school            School?
   userRoles         UserRole[]
 
   @@map("user")
