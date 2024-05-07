@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Param,
-  Delete,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
 import { SchoolService } from './school.service';
 import { CreateSchoolDto } from './dto/create-school.dto';
 import { RolesGuard } from 'src/auth/gaurds/roles.guard';
@@ -42,10 +34,5 @@ export class SchoolController {
   })
   findOne(@UserDec() user: any) {
     return this.schoolService.findOneByUserId(user.id);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.schoolService.remove(+id);
   }
 }

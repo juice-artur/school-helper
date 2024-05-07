@@ -33,7 +33,8 @@ model User {
   VerificationToken VerificationToken?
   teachers          Teacher[]
   students          Student?
-  school            School?
+  schoolId          String?
+  school   School? @relation(fields: [schoolId], references: [id])
   userRoles         UserRole[]
 
   @@map("user")
@@ -65,9 +66,8 @@ model School {
   index       String
   phone       String
   classes     Class[]
-
   directorId String @unique @map("director_id")
-  director   User   @relation(fields: [directorId], references: [id])
+  user User[]
 
   @@map("school")
 }

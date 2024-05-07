@@ -16,7 +16,7 @@ export class ClassService {
       data: {
         ...createClassDto,
         homeroomTeacher: { connect: { id: teacher?.id } },
-        school: { connect: { id: teacher?.user.school[0].id } },
+        school: { connect: { id: teacher?.user.school?.id } },
       },
     });
   }
