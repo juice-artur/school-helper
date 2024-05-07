@@ -1,4 +1,4 @@
-import { Box, Button, TextField, Typography } from "@mui/material"
+import { Box, Button, Link, TextField, Typography } from "@mui/material"
 import { useState } from "react"
 import school from '../../assets/img/shool.jpg'
 
@@ -6,6 +6,22 @@ import school from '../../assets/img/shool.jpg'
 export const ProfileStudent = () => {
 
     const [ profilePhoto, setProfilePhoto ] = useState<boolean>(false)
+
+    const handleExit = async () => {
+        // event.preventDefault();
+
+        
+        const response = await fetch(`http://localhost:3005/auth/logout`, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        console.log(response);
+
+    };
+
 
     return (
         <>
@@ -42,7 +58,14 @@ export const ProfileStudent = () => {
 
             <Button sx={{maxWidth: '210px', alignSelf: 'flex-end', backgroundColor: '#423A34', borderRadius: '50px', color:'white', padding: '8px 30px', textTransform: 'none'}}>
       <Typography>Зберегти</Typography>
-    </Button>        </Box>
+    </Button> 
+    <Link href='/'>
+    <Button onClick={handleExit} sx={{maxWidth: '210px', alignSelf: 'flex-end', backgroundColor: '#423A34', borderRadius: '50px', color:'white', padding: '8px 30px', textTransform: 'none'}}>
+      <Typography>Вихід</Typography>
+    </Button>
+    </Link>
+            
+    </Box>
         </>
     )
 }

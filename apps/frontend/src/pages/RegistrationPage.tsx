@@ -24,7 +24,7 @@ export const RegistrationPage = () => {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
             console.log(formState)
-        const response = await fetch(`http://localhost:3005/user/create/teacher`, {
+        const response = await fetch(`http://localhost:3005/user/activate/teacher`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
