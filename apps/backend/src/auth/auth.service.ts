@@ -22,7 +22,7 @@ export class AuthService {
   }
 
   async getUserById(userId: string) {
-    return this.userService.findOneById(userId);
+    return this.userService.findUserById(userId);
   }
 
   async signIn(signInDto: SignInDto) {
