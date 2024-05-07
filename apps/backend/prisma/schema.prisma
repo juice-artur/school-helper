@@ -28,12 +28,13 @@ model User {
   password  String?
   googleId  String? @map("google_id")
   avatarKey String? @map("avatar_key")
-  isActive  Boolean @map("is_active") @default(false)
+  isActive  Boolean @default(false) @map("is_active")
 
   VerificationToken VerificationToken?
   teachers          Teacher[]
   students          Student?
-  school            School[]
+  schoolId          String?
+  school   School? @relation(fields: [schoolId], references: [id])
   userRoles         UserRole[]
 
   @@map("user")
@@ -65,9 +66,8 @@ model School {
   index       String
   phone       String
   classes     Class[]
-
   directorId String @unique @map("director_id")
-  director   User   @relation(fields: [directorId], references: [id])
+  user User[]
 
   @@map("school")
 }
@@ -89,52 +89,33 @@ model Class {
   students          Student[]
   homeroomTeacherId String    @map("homeroom_teacher_id")
   homeroomTeacher   Teacher   @relation(fields: [homeroomTeacherId], references: [id])
-  ratings           Rating[]
 
   @@map("class")
 }
 
 model Student {
-  id      String   @id @default(uuid())
-  userId  String   @unique @map("user_id")
-  user    User     @relation(fields: [userId], references: [id])
-  classId String?  @unique @map("class_id")
-  class   Class?   @relation(fields: [classId], references: [id])
-  ratings Rating[]
+  id      String  @id @default(uuid())
+  userId  String  @unique @map("user_id")
+  user    User    @relation(fields: [userId], references: [id])
+  classId String? @unique @map("class_id")
+  class   Class?  @relation(fields: [classId], references: [id])
 
   @@map("student")
 }
 
 model Subject {
-  id      String   @id @default(uuid())
-  title   String
-  ratings Rating[]
-  task    Task[]
+  id    String @id @default(uuid())
+  title String
+  task  Task[]
 
   @@map("subject")
-}
-
-model Rating {
-  id         String  @id @default(uuid())
-  title      String
-  stdudentId String  @unique @map("student_id")
-  student    Student @relation(fields: [stdudentId], references: [id])
-  classId    String  @unique @map("class_id")
-  class      Class   @relation(fields: [classId], references: [id])
-  subjectId  String  @unique @map("subject_id")
-  subject    Subject @relation(fields: [subjectId], references: [id])
-  grade      Int
-  taskId     String  @unique @map("task_id")
-  task       Task    @relation(fields: [taskId], references: [id])
-
-  @@map("rating")
 }
 
 model Task {
   id          String           @id @default(uuid())
   title       String
   description String
-  ratings     Rating[]
+  ratings     String
   subjectId   String           @unique @map("subject_id")
   subject     Subject          @relation(fields: [subjectId], references: [id])
   attachments TaskAttachment[]

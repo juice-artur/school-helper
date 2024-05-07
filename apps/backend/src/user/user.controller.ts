@@ -7,16 +7,19 @@ import { RolesGuard } from 'src/auth/gaurds/roles.guard';
 import { UserDec } from 'src/decorators/user.decorator';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateTeacherDto } from './dto/create-teacher.dto';
-import { ApiOperation, ApiOkResponse, ApiBody } from '@nestjs/swagger';
+import { ApiOperation, ApiOkResponse, ApiBody, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/create-user.dto';
 import { VerificationTokenService } from 'src/verification-token/verification-token.service';
 import { ActivateTeacherDto } from './dto/activate-teacher.dto';
+import { MailService } from 'src/mail/mail.service';
 
+@ApiTags('User Endpoints')
 @Controller('user')
 export class UserController {
   constructor(
     private readonly userService: UserService,
     private readonly verificationTokenService: VerificationTokenService,
+    private readonly mailService: MailService,
   ) {}
 
   @UseGuards(JwtGuard, RolesGuard)
@@ -32,22 +35,28 @@ export class UserController {
   @ApiOkResponse({
     type: CreateUserDto,
   })
-  @ApiBody({ type: CreateUserDto })
+  @ApiBody({ type: CreateTeacherDto })
   @Post('create/teacher')
-  async createTeacher(@Body() createTeacherDto: CreateTeacherDto) {
-    const user = await this.userService.createTeacher(createTeacherDto);
+  async createTeacher(
+    @UserDec() director: any,
+    @Body() createTeacherDto: CreateTeacherDto,
+  ) {
+    const user = await this.userService.createTeacher(
+      createTeacherDto,
+      director.id,
+    );
     const token = await this.verificationTokenService.create(user.id);
-    console.log(token);
+    this.mailService.sendverificationMail(token, createTeacherDto.email);
     return user;
   }
 
   @UseGuards(JwtGuard, RolesGuard)
   @Roles(Role.DIRECTOR)
-  @ApiOperation({ summary: 'Create teacher' })
+  @ApiOperation({ summary: 'Activate teacher' })
   @ApiOkResponse({
-    type: CreateUserDto,
+    type: ActivateTeacherDto,
   })
-  @ApiBody({ type: CreateUserDto })
+  @ApiBody({ type: ActivateTeacherDto })
   @Post('activate/teacher')
   async activateTeacher(@Body() createTeacherDto: ActivateTeacherDto) {
     return this.userService.activateTeacher(createTeacherDto);

@@ -6,10 +6,11 @@ import { UserModule } from '../user/user.module';
 import { JwtStrategy } from './strategies/jwt-strategy';
 import { GlobalJwtModule } from 'src/jwt/jwt.module';
 import { AuthRequestHelper } from './utils/cookie-helper.service';
+import { MailService } from 'src/mail/mail.service';
 
 @Module({
   imports: [UserModule, PassportModule, GlobalJwtModule],
-  providers: [AuthService, JwtStrategy, AuthRequestHelper],
+  providers: [AuthService, JwtStrategy, AuthRequestHelper, MailService],
   controllers: [AuthController],
 })
 export class AuthModule {}

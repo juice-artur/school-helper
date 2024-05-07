@@ -17,6 +17,10 @@ export class AuthService {
     return this.userService.createStudent(createUserDto);
   }
 
+  async directorSignUp(createUserDto: CreateUserDto) {
+    return this.userService.createDirector(createUserDto);
+  }
+
   async getUserById(userId: string) {
     return this.userService.findOneById(userId);
   }

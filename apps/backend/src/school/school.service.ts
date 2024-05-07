@@ -11,9 +11,15 @@ export class SchoolService {
     createSchoolDto: CreateSchoolDto,
     directorId: string,
   ): Promise<SchoolDto> {
-    return await this.prismaService.school.create({
-      data: { ...createSchoolDto, director: { connect: { id: directorId } } },
+    const school = await this.prismaService.school.create({
+      data: { ...createSchoolDto, directorId: directorId },
     });
+    await this.prismaService.user.update({
+      where: { id: directorId },
+      data: { school: { connect: { id: school.id } } },
+    });
+
+    return school;
   }
 
   async findOneByUserId(id: string) {
@@ -26,14 +32,7 @@ export class SchoolService {
     }
 
     return await this.prismaService.school.findUnique({
-      where: { id: user.school[0].id },
+      where: { id: user.school.id },
     });
-  }
-
-  findAll() {
-    return `This action returns all school`;
-  }
-  remove(id: number) {
-    return `This action removes a #${id} school`;
   }
 }

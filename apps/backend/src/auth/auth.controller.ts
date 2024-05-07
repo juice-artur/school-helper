@@ -6,13 +6,16 @@ import { SignInDto } from './dto/SignInDto';
 import { AuthRequestHelper } from './utils/cookie-helper.service';
 import { JwtGuard } from './gaurds/jwt-auth.guard';
 import { UserDec } from '../decorators/user.decorator';
-import { ApiOperation, ApiOkResponse, ApiBody } from '@nestjs/swagger';
+import { ApiOperation, ApiOkResponse, ApiBody, ApiTags } from '@nestjs/swagger';
+import { MailService } from 'src/mail/mail.service';
 
+@ApiTags('Auth Endpoints')
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly requestHelper: AuthRequestHelper,
+    private readonly mailService: MailService,
   ) {}
 
   @Post('signup')
@@ -23,6 +26,18 @@ export class AuthController {
   @ApiBody({ type: CreateUserDto })
   async signUp(@Body() createUserDto: CreateUserDto) {
     return this.authService.studentSignUp(createUserDto);
+  }
+
+  @Post('signup/director')
+  @ApiOperation({ summary: 'Create user' })
+  @ApiOkResponse({
+    type: CreateUserDto,
+  })
+  @ApiBody({ type: CreateUserDto })
+  async directorSignUp(@Body() createUserDto: CreateUserDto) {
+    const user = await this.authService.directorSignUp(createUserDto);
+    this.mailService.sendDirectorWasCreatedMail(user.id);
+    return user;
   }
 
   @Post('signin')

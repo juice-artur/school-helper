@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Param,
-  Delete,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
 import { SchoolService } from './school.service';
 import { CreateSchoolDto } from './dto/create-school.dto';
 import { RolesGuard } from 'src/auth/gaurds/roles.guard';
@@ -14,9 +6,10 @@ import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from '@prisma/client';
 import { UserDec } from 'src/decorators/user.decorator';
 import { JwtGuard } from 'src/auth/gaurds/jwt-auth.guard';
-import { ApiOperation, ApiOkResponse, ApiBody } from '@nestjs/swagger';
+import { ApiOperation, ApiOkResponse, ApiBody, ApiTags } from '@nestjs/swagger';
 import { SchoolDto } from './dto/school.dto';
 
+@ApiTags('School Endpoints')
 @Controller('school')
 export class SchoolController {
   constructor(private readonly schoolService: SchoolService) {}
@@ -41,10 +34,5 @@ export class SchoolController {
   })
   findOne(@UserDec() user: any) {
     return this.schoolService.findOneByUserId(user.id);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.schoolService.remove(+id);
   }
 }

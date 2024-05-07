@@ -56,12 +56,35 @@ export class UserService {
     return user;
   }
 
-  async createTeacher(createTeacherDto: CreateTeacherDto): Promise<User> {
+  async createDirector(createUserDto: CreateUserDto): Promise<User> {
+    const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+
+    const user = await this.prismaService.user.create({
+      data: {
+        ...createUserDto,
+        password: hashedPassword,
+        userRoles: { create: { role: Role.DIRECTOR } },
+        isActive: false,
+      },
+    });
+
+    return user;
+  }
+
+  async createTeacher(
+    createTeacherDto: CreateTeacherDto,
+    directorId: string,
+  ): Promise<User> {
+    const school = await this.prismaService.school.findUnique({
+      where: { directorId: directorId },
+    });
+
     const user = await this.prismaService.user.create({
       data: {
         ...createTeacherDto,
         userRoles: { create: { role: Role.TEACHER } },
         isActive: false,
+        school: { connect: { id: school?.id } },
       },
     });
 
@@ -136,6 +159,9 @@ export class UserService {
   }
 
   async findOneById(id: string): Promise<User | null> {
-    return this.prismaService.user.findUnique({ where: { id: id } });
+    return this.prismaService.user.findUnique({
+      where: { id: id },
+      include: { school: true },
+    });
   }
 }
