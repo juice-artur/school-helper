@@ -16,7 +16,10 @@ export type User = {
     lastName: string,
     email: string,
     password: string,
-    googleId: null | string
+    googleId: null|string,
+    avatarKey: null|string,
+    isActive: boolean,
+    schoolId: string,
 }
 
 export type UserLogInResValues = {
@@ -24,3 +27,4 @@ export type UserLogInResValues = {
     accessToken: string,
     refreshToken: string,
 }
+
