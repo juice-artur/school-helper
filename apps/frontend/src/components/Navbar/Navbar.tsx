@@ -7,39 +7,22 @@ import { Link, useLocation } from 'react-router-dom';
 import { AuthPopup } from '../AuthPopup/AuthPopup';
 import Logo from '../../assets/img/Logo image.svg';
 import UserImage from '../../assets/img/Account image.svg'
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getUserData } from '../../store/reducers/user/userThunks';
 
 export const Navbar = () => {
   const location = useLocation().pathname;
 
-  const [isAuthorized, setIsAuthorized] = useState<boolean>(false);
-
-  const fetchData = async () => {
-    
-    try {
-      const baseUrl =  import.meta.env.VITE_BACKEND_API_URL
-      const response = await fetch(`${baseUrl}/auth/get/me`, {
-        method: "GET",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      });
-      const res = await response.json();
-      console.log(res);
-
-      if (response.ok) {
-        setIsAuthorized(true);
-      } else {
-        setIsAuthorized(false);
-      }
-    } catch (error) {
-      console.error('Fetch error:', error);
-      setIsAuthorized(false);
-    }
-  };
-
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(state => state.user.data)
   useEffect(() => {
-    fetchData();
-  }, []);
+    dispatch(getUserData())
+  }, [user])
+
+  console.log(user);
+  
+
+  const [isAuthorized, setIsAuthorized] = useState<boolean>(false);
 
   return (
     <AppBar position="static" color='transparent' sx={{height:'80px', margin: '0px auto', padding: '40px 0', alignItems:'center', justifyContent: 'center', 
@@ -67,12 +50,12 @@ export const Navbar = () => {
             </Link>
           </Box>
           {isAuthorized ? (
-            <AuthPopup/>
+            <Link to='/user'>
+            <img src={UserImage} alt="" style={{width: '35px', cursor: 'pointer'}}/>
+            </Link>
           ) : 
-          <Link to='/user'>
-          <img src={UserImage} alt="" style={{width: '35px', cursor: 'pointer'}}/>
-          </Link>
-          }
+          <AuthPopup/>
+        }
         </Box>
       </Container>
     </AppBar>

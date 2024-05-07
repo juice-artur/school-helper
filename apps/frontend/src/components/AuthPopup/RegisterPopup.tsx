@@ -2,8 +2,11 @@ import { Box, Button, Checkbox, FormControlLabel, TextField, Typography } from "
 import { useState } from 'react'
 import { UserRegisterValues } from "../../TypesAndInterfaces"
 
+interface RegisterPopupProps{
+    backToLoginPopup: () => void  
+}
 
-export const RegisterPopup = (backToLoginPopup:any) => {
+export const RegisterPopup = ({ backToLoginPopup }: RegisterPopupProps) => {
     const [isValidEmail, setIsValidEmail] = useState<boolean>(true)
     const [isValidPassword, setIsValidPassword] = useState<boolean>(true)
     // const [error, setError] = useState<string|null>(null)
@@ -41,7 +44,7 @@ export const RegisterPopup = (backToLoginPopup:any) => {
             setError(false)
             setTimeout(() => {
               backToLoginPopup();
-            }, 3000)
+            }, 1000)
         } else {
             setError(true);
         }

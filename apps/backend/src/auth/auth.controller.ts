@@ -24,6 +24,12 @@ export class AuthController {
     private readonly mailService: MailService,
   ) {}
 
+  @UseGuards(JwtGuard)
+  @Get('get/me')
+  async getMe(@UserDec() user: any) {
+    return this.authService.getUserById(user.id);
+  }
+
   @Post('signup')
   @ApiOperation({ summary: 'Create user' })
   @ApiOkResponse({
@@ -58,7 +64,8 @@ export class AuthController {
     if (user) {
       const token = await this.authService.signJwtToken(user.user.id);
 
-      this.requestHelper.attachJwtTokenToCookie(res, token);
+      await this.requestHelper.attachJwtTokenToCookie(res, token);
+      return user;
     }
   }
 
@@ -66,11 +73,5 @@ export class AuthController {
   @Get('logout')
   async logout(@Res({ passthrough: true }) res: Response) {
     return this.requestHelper.clearJwtTokenFromCookie(res);
-  }
-
-  @UseGuards(JwtGuard)
-  @Get('get/me')
-  async getMe(@UserDec() user: any) {
-    return this.authService.getUserById(user.id);
   }
 }
