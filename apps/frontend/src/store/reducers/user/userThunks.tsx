@@ -6,6 +6,7 @@ export const getUserData = createAsyncThunk('user', async ( dispatch) => {
         const baseUrl =  import.meta.env.VITE_BACKEND_API_URL
         const response = await fetch(`${baseUrl}/auth/get/me`, {
           method: "GET",
+          credentials: 'include',
           headers: {
             'Content-Type': 'application/json'
           },
