@@ -10,7 +10,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { MinioService } from '../minio/minio.service';
-import { JwtGuard } from '../auth/gaurds/jwt-auth.guard';
+import { JwtGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiTags('File Endpoints')
 @Controller('file')

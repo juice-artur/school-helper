@@ -3,8 +3,8 @@ import { ClassService } from './class.service';
 import { CreateClassDto } from './dto/create-class.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Role } from '@prisma/client';
-import { JwtGuard } from 'src/auth/gaurds/jwt-auth.guard';
-import { RolesGuard } from 'src/auth/gaurds/roles.guard';
+import { JwtGuard } from 'src/auth/guards/jwt-auth.guard';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/decorators/roles.decorator';
 import { UserDec } from 'src/decorators/user.decorator';
 

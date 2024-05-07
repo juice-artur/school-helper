@@ -11,7 +11,7 @@ export class MailService {
     private readonly configObject: ConfigType<typeof config>,
   ) {}
 
-  async sendverificationMail(verificationToken: string, email: string) {
+  async sendVerificationMail(verificationToken: string, email: string) {
     const confirmation_url = `${this.configObject.FRONTEND_URL}/registration/?token=${verificationToken}`;
     await this.mailerService.sendMail({
       to: email,
@@ -29,7 +29,7 @@ export class MailService {
       to: `${this.configObject.ADMIN_EMAIL}`,
       from: '"Support Team" <support@example.com>',
       subject: 'SchoolHelper! Director was added',
-      template: './director-acount-needed-activate',
+      template: './director-account-needed-activate',
       context: {
         user_id: userId,
       },
