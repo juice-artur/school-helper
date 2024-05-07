@@ -1,11 +1,11 @@
 import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
 import { SchoolService } from './school.service';
 import { CreateSchoolDto } from './dto/create-school.dto';
-import { RolesGuard } from 'src/auth/gaurds/roles.guard';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from '@prisma/client';
 import { UserDec } from 'src/decorators/user.decorator';
-import { JwtGuard } from 'src/auth/gaurds/jwt-auth.guard';
+import { JwtGuard } from 'src/auth/guards/jwt-auth.guard';
 import { ApiOperation, ApiOkResponse, ApiBody, ApiTags } from '@nestjs/swagger';
 import { SchoolDto } from './dto/school.dto';
 

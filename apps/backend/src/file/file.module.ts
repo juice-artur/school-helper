@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { FileController } from './file.controller';
 import { MinioModule } from '../minio/minio.module';
-import { JwtGuard } from 'src/auth/gaurds/jwt-auth.guard';
+import { JwtGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Module({
   imports: [MinioModule],
