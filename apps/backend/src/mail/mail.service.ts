@@ -12,7 +12,7 @@ export class MailService {
   ) {}
 
   async sendVerificationMail(verificationToken: string, email: string) {
-    const confirmation_url = `${this.configObject.FRONTEND_URL}/registration/?token=${verificationToken}`;
+    const confirmation_url = `${this.configObject.FRONTEND_URL}/registration?token=${verificationToken}`;
     await this.mailerService.sendMail({
       to: email,
       from: '"Support Team" <support@example.com>',
