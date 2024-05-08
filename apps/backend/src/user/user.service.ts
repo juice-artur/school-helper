@@ -63,10 +63,31 @@ export class UserService {
       data: {
         ...createUserDto,
         password: hashedPassword,
-        userRoles: { create: { role: Role.DIRECTOR } },
         isActive: false,
+        userRoles: {
+          create: [{ role: Role.TEACHER }, { role: Role.DIRECTOR }],
+        },
       },
     });
+
+    const existingTeacher = await this.prismaService.teacher.findUnique({
+      where: { userId: user.id },
+    });
+
+    if (existingTeacher) {
+      throw new Error('Teacher with this user ID already exists');
+    }
+
+    try {
+      await this.prismaService.teacher.create({
+        data: {
+          user: { connect: { id: user.id } },
+        },
+      });
+    } catch (error) {
+      console.error('Failed to create teacher:', error);
+      throw new Error('Teacher creation failed');
+    }
 
     return user;
   }

@@ -61,9 +61,10 @@ model VerificationToken {
 model UserRole {
   id     String @id @default(uuid())
   role   Role
-  userId String @unique @map("user_id")
-  user   User   @relation(fields: [userId], references: [id])
+  userId String
+  user   User?   @relation(fields: [userId], references: [id])
 
+  @@unique([userId, role])  
   @@map("user_role")
 }
 
