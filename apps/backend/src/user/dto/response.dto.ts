@@ -1,4 +1,4 @@
-import { Role, UserRole } from '@prisma/client';
+import { Role } from '@prisma/client';
 import { Exclude, Expose, Transform, plainToInstance } from 'class-transformer';
 
 class RoleDTO {
