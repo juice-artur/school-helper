@@ -8,7 +8,7 @@ import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/decorators/roles.decorator';
 import { UserDec } from 'src/decorators/user.decorator';
 
-@ApiTags('Class controller')
+@ApiTags('Class Endpoints')
 @Controller('class')
 export class ClassController {
   constructor(private readonly classService: ClassService) {}
