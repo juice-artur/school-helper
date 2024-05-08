@@ -6,6 +6,8 @@ import { Role, User } from '@prisma/client';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateTeacherDto } from './dto/create-teacher.dto';
 import { ActivateTeacherDto } from './dto/activate-teacher.dto';
+import { plainToInstance } from 'class-transformer';
+import { ResponseUserDto } from './dto/response.dto';
 
 @Injectable()
 export class UserService {
@@ -186,10 +188,12 @@ export class UserService {
     return user;
   }
 
-  async findUserById(id: string): Promise<User | null> {
-    return this.prismaService.user.findUnique({
+  async findUserById(id: string): Promise<ResponseUserDto | null> {
+    const user = await this.prismaService.user.findUnique({
       where: { id: id },
       include: { userRoles: true },
     });
+
+    return plainToInstance(ResponseUserDto, user);
   }
 }
