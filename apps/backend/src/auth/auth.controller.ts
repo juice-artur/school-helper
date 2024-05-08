@@ -14,6 +14,7 @@ import {
   ApiCookieAuth,
 } from '@nestjs/swagger';
 import { MailService } from 'src/mail/mail.service';
+import { ResponseUserDto } from 'src/user/dto/response.dto';
 
 @ApiTags('Auth Endpoints')
 @Controller('auth')
@@ -25,6 +26,10 @@ export class AuthController {
   ) {}
 
   @UseGuards(JwtGuard)
+  @ApiOperation({ summary: 'Create logined user' })
+  @ApiOkResponse({
+    type: ResponseUserDto,
+  })
   @Get('get/me')
   async getMe(@UserDec() user: any) {
     return this.authService.getUserById(user.id);
