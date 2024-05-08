@@ -124,7 +124,7 @@ export class UserService {
   }
 
   async activateTeacher(activateTeacherDto: ActivateTeacherDto): Promise<User> {
-    const userId = await this.findUserIdByveVificationToken(
+    const userId = await this.findUserIdByVerificationToken(
       activateTeacherDto.verificationToken!,
     );
     if (!userId) {
@@ -145,7 +145,7 @@ export class UserService {
     });
   }
 
-  async findUserIdByveVificationToken(token: string): Promise<string | null> {
+  async findUserIdByVerificationToken(token: string): Promise<string | null> {
     const verificationToken =
       await this.prismaService.verificationToken.findUnique({
         where: { token: token },
@@ -189,6 +189,7 @@ export class UserService {
   async findUserById(id: string): Promise<User | null> {
     return this.prismaService.user.findUnique({
       where: { id: id },
+      include: { userRoles: true },
     });
   }
 }

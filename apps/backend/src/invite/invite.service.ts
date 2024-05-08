@@ -42,7 +42,7 @@ export class InviteService {
       where: { id: invitationToClass.studentId },
       data: { class: { connect: { id: invitationToClass.classId } } },
     });
-    
+
     await this.prismaService.invitationToClass.delete({ where: { id: id } });
     return student;
   }
