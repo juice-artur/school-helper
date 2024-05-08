@@ -40,6 +40,15 @@ model User {
   @@map("user")
 }
 
+model InvitationToClass{
+    id     String @id @default(uuid())
+    classId          String
+    class   Class @relation(fields: [classId], references: [id])
+    studentId          String @unique
+    student   Student @relation(fields: [studentId], references: [id])
+    @@map("invitation_to_class")
+}
+
 model VerificationToken {
   id     String @id @default(uuid())
   userId String @unique @map("user_id")
@@ -89,7 +98,7 @@ model Class {
   students          Student[]
   homeroomTeacherId String    @map("homeroom_teacher_id")
   homeroomTeacher   Teacher   @relation(fields: [homeroomTeacherId], references: [id])
-
+  invitations InvitationToClass[]
   @@map("class")
 }
 
@@ -99,7 +108,7 @@ model Student {
   user    User    @relation(fields: [userId], references: [id])
   classId String? @unique @map("class_id")
   class   Class?  @relation(fields: [classId], references: [id])
-
+  invation InvitationToClass?
   @@map("student")
 }
 

@@ -11,6 +11,10 @@ class BaseConfig {
   @Expose()
   @IsString()
   ADMIN_EMAIL: string;
+
+  @Expose()
+  @IsString()
+  BACKEND_URL: string;
 }
 
 export default registerAs('app_config', () => {

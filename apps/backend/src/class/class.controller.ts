@@ -13,7 +13,6 @@ import { UserDec } from 'src/decorators/user.decorator';
 export class ClassController {
   constructor(private readonly classService: ClassService) {}
 
-  @Post()
   @UseGuards(JwtGuard, RolesGuard)
   @Roles(Role.TEACHER)
   @ApiOperation({ summary: 'Create class' })

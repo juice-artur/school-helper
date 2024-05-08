@@ -35,4 +35,19 @@ export class MailService {
       },
     });
   }
+
+  async sendInviteStudentToClassMail(
+    inventionId: string,
+    studentEmail: string,
+  ) {
+    await this.mailerService.sendMail({
+      to: `${studentEmail}`,
+      from: '"Support Team" <support@example.com>',
+      subject: 'SchoolHelper! Invitation to class',
+      template: './student-invite-to-class',
+      context: {
+        confirmation_url: `${this.configObject.FRONTEND_URL}/invite/student/accept/${inventionId}`,
+      },
+    });
+  }
 }

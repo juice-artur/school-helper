@@ -11,7 +11,6 @@ export class ClassService {
       include: { user: { include: { school: true } } },
     });
 
-    //TODO: Improve this code Make one to many correctly
     return this.prismaService.class.create({
       data: {
         ...createClassDto,

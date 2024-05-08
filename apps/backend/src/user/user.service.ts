@@ -154,8 +154,15 @@ export class UserService {
     }
   }
 
-  async findOneByEmail(email: string): Promise<User | null> {
-    return this.prismaService.user.findUnique({ where: { email: email } });
+  async findOneByEmail(email: string): Promise<User> {
+    const user = await this.prismaService.user.findUnique({
+      where: { email: email },
+    });
+
+    if (!user) {
+      throw new NotFoundException();
+    }
+    return user;
   }
 
   async findUserById(id: string): Promise<User | null> {
