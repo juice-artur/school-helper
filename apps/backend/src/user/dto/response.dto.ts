@@ -41,9 +41,10 @@ export class ResponseUserDto extends PartialType(CreateUserDto) {
     return plainToInstance(RoleDTO, value);
   })
   @ApiProperty({
-    example: 'ADMIN',
+    example: '[{role: Admin}]',
     description: 'User roles',
     isArray: true,
+    enum: Role,
   })
-  userRoles: string[];
+  userRoles: Role[];
 }
