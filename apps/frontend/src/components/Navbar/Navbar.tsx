@@ -17,7 +17,7 @@ export const Navbar = () => {
   const user = useAppSelector(state => state.user.data)
   useEffect(() => {
     dispatch(getUserData())
-  }, [user])
+  }, [dispatch])
 
   console.log(user);
   

@@ -25,13 +25,14 @@ export class AuthController {
     private readonly mailService: MailService,
   ) {}
 
+  @Get('get/me')
   @UseGuards(JwtGuard)
   @ApiOperation({ summary: 'Create logined user' })
   @ApiOkResponse({
     type: ResponseUserDto,
   })
-  @Get('get/me')
   async getMe(@UserDec() user: any) {
+    console.log(user);
     return this.authService.getUserById(user.id);
   }
 

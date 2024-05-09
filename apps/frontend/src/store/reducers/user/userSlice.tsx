@@ -4,11 +4,12 @@ import { User } from '../../../TypesAndInterfaces'
 export const userSlice = createSlice({
   name: 'user',
   initialState: {
-    data: {},
+    data: null,
   },
   reducers: {
-    setCurrentUser: (state, action:PayloadAction<User>)  => {
-      state.user = action.payload
+    setCurrentUser: (state, action:PayloadAction<User| null>)  => {
+      console.log(action)
+      state.data = action.payload
     },
   }
 })

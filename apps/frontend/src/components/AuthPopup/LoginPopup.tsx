@@ -25,7 +25,9 @@ export const LoginPopup = () => {
         const baseUrl =  import.meta.env.VITE_BACKEND_API_URL
         const response = await fetch(`${baseUrl}/auth/signin`, {
             method: "POST",
+            credentials: 'include',
             headers: {
+                          credentials: 'include',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(formState)
