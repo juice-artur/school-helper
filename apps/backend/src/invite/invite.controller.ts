@@ -6,6 +6,7 @@ import {
   ApiOkResponse,
   ApiBody,
   ApiParam,
+  ApiTags,
 } from '@nestjs/swagger';
 import { Role } from '@prisma/client';
 import { JwtGuard } from 'src/auth/guards/jwt-auth.guard';
@@ -14,6 +15,7 @@ import { Roles } from 'src/decorators/roles.decorator';
 import { MailService } from 'src/mail/mail.service';
 
 @Controller('invite')
+@ApiTags('Invite endpoints')
 export class InviteController {
   constructor(
     private readonly inviteService: InviteService,
