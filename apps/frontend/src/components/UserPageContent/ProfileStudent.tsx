@@ -1,25 +1,16 @@
 import { Box, Button, Link, TextField, Typography } from "@mui/material"
 import { useState } from "react"
 import school from '../../assets/img/shool.jpg'
+import { deleteUserData } from "../../store/reducers/user/userThunks"
+import { useAppDispatch } from "../../hooks"
 
 
 export const ProfileStudent = () => {
-
-    const [ profilePhoto, setProfilePhoto ] = useState<boolean>(false)
+    const dispatch = useAppDispatch();
 
     const handleExit = async () => {
-        // event.preventDefault();
-
-        
-        const response = await fetch(`http://localhost:3005/auth/logout`, {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        });
-
-        console.log(response);
-
+        dispatch(deleteUserData());
+        console.log('hello')
     };
 
 
@@ -59,11 +50,9 @@ export const ProfileStudent = () => {
             <Button sx={{maxWidth: '210px', alignSelf: 'flex-end', backgroundColor: '#423A34', borderRadius: '50px', color:'white', padding: '8px 30px', textTransform: 'none'}}>
       <Typography>Зберегти</Typography>
     </Button> 
-    <Link href='/'>
     <Button onClick={handleExit} sx={{maxWidth: '210px', alignSelf: 'flex-end', backgroundColor: '#423A34', borderRadius: '50px', color:'white', padding: '8px 30px', textTransform: 'none'}}>
       <Typography>Вихід</Typography>
     </Button>
-    </Link>
             
     </Box>
         </>
