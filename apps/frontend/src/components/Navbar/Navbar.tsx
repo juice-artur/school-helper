@@ -49,7 +49,7 @@ export const Navbar = () => {
                 <Typography variant='h3' textAlign="center" padding={'10px'}>Контакти</Typography>
             </Link>
           </Box>
-          {isAuthorized ? (
+          {user ? (
             <Link to='/user'>
             <img src={UserImage} alt="" style={{width: '35px', cursor: 'pointer'}}/>
             </Link>
