@@ -6,9 +6,8 @@ import { Role } from '@prisma/client';
 import { JwtGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/decorators/roles.decorator';
-import { CreateSchoolDto } from 'src/school/dto/create-school.dto';
-import { SchoolDto } from 'src/school/dto/school.dto';
 import { UserDec } from 'src/decorators/user.decorator';
+import { CreateQuizQuestionDto } from './dto/create-quiz-question.dto';
 
 @ApiTags('Quiz Endpoints')
 @Controller('quiz')
@@ -20,11 +19,26 @@ export class QuizController {
   @Roles(Role.TEACHER)
   @ApiOperation({ summary: 'Create quiz' })
   @ApiOkResponse({
-    type: SchoolDto,
+    type: CreateQuizDto,
   })
-  @ApiBody({ type: CreateSchoolDto })
+  @ApiBody({ type: CreateQuizDto })
   @Post()
   createQuiz(@UserDec() user: any, @Body() createQuizDto: CreateQuizDto) {
     return this.quizService.createQuiz(user.id, createQuizDto);
+  }
+
+  @UseGuards(JwtGuard, RolesGuard)
+  @Roles(Role.TEACHER)
+  @ApiOperation({ summary: 'Create quiz question' })
+  @ApiOkResponse({
+    type: CreateQuizQuestionDto,
+  })
+  @ApiBody({ type: CreateQuizQuestionDto })
+  @Post('question')
+  createQuizQuestion(
+    @UserDec() user: any,
+    @Body() createQuizDto: CreateQuizQuestionDto,
+  ) {
+    return this.quizService.createQuizQuestion(createQuizDto);
   }
 }
