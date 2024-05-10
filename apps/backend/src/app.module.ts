@@ -10,6 +10,7 @@ import { VerificationTokenModule } from './verification-token/verification-token
 import { MailModule } from './mail/mail.module';
 import { ClassModule } from './class/class.module';
 import { InviteModule } from './invite/invite.module';
+import { QuizModule } from './quiz/quiz.module';
 import mail from './config/mail';
 import app_config from './config/appconfig';
 
@@ -24,6 +25,7 @@ import app_config from './config/appconfig';
     MailModule,
     ClassModule,
     InviteModule,
+    QuizModule,
   ],
   controllers: [AppController],
   providers: [AppService],
