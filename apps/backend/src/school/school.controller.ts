@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Param } from '@nestjs/common';
 import { SchoolService } from './school.service';
 import { CreateSchoolDto } from './dto/create-school.dto';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
@@ -6,8 +6,15 @@ import { Roles } from 'src/decorators/roles.decorator';
 import { Role } from '@prisma/client';
 import { UserDec } from 'src/decorators/user.decorator';
 import { JwtGuard } from 'src/auth/guards/jwt-auth.guard';
-import { ApiOperation, ApiOkResponse, ApiBody, ApiTags } from '@nestjs/swagger';
+import {
+  ApiOperation,
+  ApiOkResponse,
+  ApiBody,
+  ApiTags,
+  ApiParam,
+} from '@nestjs/swagger';
 import { SchoolDto } from './dto/school.dto';
+import { ResponseUserDto } from 'src/user/dto/response.dto';
 
 @ApiTags('School Endpoints')
 @Controller('school')
@@ -34,5 +41,20 @@ export class SchoolController {
   })
   findOne(@UserDec() user: any) {
     return this.schoolService.findOneByUserId(user.id);
+  }
+
+  @UseGuards(JwtGuard)
+  @Get('teachers/by-school/:id')
+  @ApiOperation({ summary: 'Return all school teacher school' })
+  @ApiOkResponse({
+    type: ResponseUserDto,
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'School id',
+    example: 'f2a720fe-275e-47e4-b10c-b0e00f5862e7',
+  })
+  findAllTeacherBySchoolId(@Param('id') id: string) {
+    return this.schoolService.findAllTeacherBySchoolId(id);
   }
 }

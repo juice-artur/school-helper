@@ -3,6 +3,7 @@ import { CreateSchoolDto } from './dto/create-school.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { NotFoundError } from 'rxjs';
 import { SchoolDto } from './dto/school.dto';
+import { Role } from '@prisma/client';
 
 @Injectable()
 export class SchoolService {
@@ -30,9 +31,22 @@ export class SchoolService {
     if (!user || !user.school) {
       throw NotFoundError;
     }
-
     return await this.prismaService.school.findUnique({
       where: { id: user.school.id },
     });
+  }
+
+  async findAllTeacherBySchoolId(id: string) {
+    const user = await this.prismaService.user.findMany({
+      include: { userRoles: true },
+      where: { schoolId: id },
+    });
+    if (!user) {
+      throw NotFoundError;
+    }
+
+    return user.filter((u) =>
+      u.userRoles.map((r) => r.role).includes(Role.TEACHER),
+    );
   }
 }
