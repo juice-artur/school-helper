@@ -21,9 +21,6 @@ export const Navbar = () => {
 
   console.log(user);
   
-
-  const [isAuthorized, setIsAuthorized] = useState<boolean>(false);
-
   return (
     <AppBar position="static" color='transparent' sx={{height:'80px', margin: '0px auto', padding: '40px 0', alignItems:'center', justifyContent: 'center', 
     backgroundColor: location.includes("schools") || location.includes("blog") || location.includes("about") || location.includes("contacts") ? "#998B71" : ''}}>

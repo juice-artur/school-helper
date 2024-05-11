@@ -1,10 +1,10 @@
-import TabPanelStudent from "../components/UserPageContent/TabPanelStudent"
+import VerticalTabs from "../components/StudentPageContent/TabPanel"
 
 
 export const UserPage = () => {
     return(
         <>
-        <TabPanelStudent/>
+        <VerticalTabs/>
         </>
     )
 }

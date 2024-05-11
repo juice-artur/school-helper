@@ -14,6 +14,7 @@ export const RegisterPopup = ({ backToLoginPopup }: RegisterPopupProps) => {
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [iamDirector, setIamDirector] = useState(false)
 
 
     const [formState, setFormState] = useState<UserRegisterValues>({
@@ -23,32 +24,38 @@ export const RegisterPopup = ({ backToLoginPopup }: RegisterPopupProps) => {
         lastName: "",
     });
 
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const checked = event.target.checked;
+        setIamDirector(checked);
+      };
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         const baseUrl =  import.meta.env.VITE_BACKEND_API_URL
+        let link = baseUrl + ( iamDirector ? '/auth/signup/director' :  '/auth/signup' )
+
         event.preventDefault();
-            console.log(formState)
-        const response = await fetch(`${baseUrl}/auth/signup`, {
+        console.log(formState)
+        console.log (link)
+        const response = await fetch(link, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(formState)
         });
-
-        const res = await response.json();
-
+    
         console.log(response);
-
+    
         if (response.ok) {
             setSuccess(true);
             setError(false)
             setTimeout(() => {
-              backToLoginPopup();
+            backToLoginPopup();
             }, 1000)
         } else {
             setError(true);
         }
-
+    
     };
 
     const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -107,7 +114,8 @@ return (
                             onChange={handleFormChange}
                             sx={{marginTop: '25px'}}
                         />
-                    <FormControlLabel control={<Checkbox />} label="Я директор" />          
+                    <FormControlLabel control={<Checkbox checked={iamDirector}
+      onChange={handleChange} />} label="Я директор" />          
                     <Button color="primary" variant="contained" fullWidth type="submit" sx={{
                         width: 200,
                         height: 40,

@@ -3,7 +3,7 @@ import { useState } from "react"
 import school from '../../assets/img/shool.jpg'
 
 
-export const SubjectsStudent = () => {
+export const Subjects = () => {
 
     const tsks = 10
     return (

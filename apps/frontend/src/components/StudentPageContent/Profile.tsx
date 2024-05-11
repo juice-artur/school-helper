@@ -1,16 +1,20 @@
 import { Box, Button, Link, TextField, Typography } from "@mui/material"
 import { useState } from "react"
+import { useNavigate } from 'react-router-dom'
 import school from '../../assets/img/shool.jpg'
 import { deleteUserData } from "../../store/reducers/user/userThunks"
 import { useAppDispatch } from "../../hooks"
 
 
-export const ProfileStudent = () => {
+export const Profile = () => {
     const dispatch = useAppDispatch();
+
+    const navigate = useNavigate();
 
     const handleExit = async () => {
         dispatch(deleteUserData());
         console.log('hello')
+        navigate('/')
     };
 
 

@@ -3,6 +3,8 @@ import { HomePage } from './pages/HomePage';
 import { RegistrationPage } from './pages/RegistrationPage';
 import { SchoolsPage } from './pages/SchoolsPage';
 import { UserPage } from './pages/UserPage';
+import { VerticalTabs } from './components/TeacherPageContent/TabPanel'
+import { CreateSchool } from './pages/CreateShoolPage';
 
 const AppRoutes = [
     {
@@ -39,10 +41,12 @@ const AppRoutes = [
         element: <RegistrationPage/>
     },
     {
-
+        path: '/teacher-page',
+        element: <VerticalTabs/>
     },
     {
-
+        path: '/create-school',
+        element: <CreateSchool/>
     },
 ]
 
