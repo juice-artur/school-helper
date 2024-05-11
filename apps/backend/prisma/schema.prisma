@@ -182,6 +182,7 @@ model Question {
   quiz         Quiz         @relation(fields: [quizId], references: [id])
   quizId       String          @unique @map("quiz_id")
   Answer       StudentAnswer?
+  score        Int?
 
   @@map("question")
 }
