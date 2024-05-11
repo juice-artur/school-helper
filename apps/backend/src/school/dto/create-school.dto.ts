@@ -31,10 +31,10 @@ export class CreateSchoolDto {
     description: 'Contact email for the school',
     example: 'myschool@gmail.com',
   })
-  email?: string;
+  email: string | null;
   @ApiProperty({
     description: 'District for the school',
     example: 'Cherkasy',
   })
-  district?: string;
+  district: string | null;
 }
