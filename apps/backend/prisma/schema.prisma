@@ -82,6 +82,8 @@ model School {
   city        String
   index       String
   phone       String
+  email       String?
+  district    String?
   classes     Class[]
   directorId  String  @unique @map("director_id")
   user        User[]

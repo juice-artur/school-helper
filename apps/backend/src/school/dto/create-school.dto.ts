@@ -27,4 +27,14 @@ export class CreateSchoolDto {
     example: '+1-555-555-5555',
   })
   phone: string;
+  @ApiProperty({
+    description: 'Contact email for the school',
+    example: 'myschool@gmail.com',
+  })
+  email?: string;
+  @ApiProperty({
+    description: 'District for the school',
+    example: 'Cherkasy',
+  })
+  district?: string;
 }
