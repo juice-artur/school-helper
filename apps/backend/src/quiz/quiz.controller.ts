@@ -1,7 +1,13 @@
-import { Controller, Post, Body, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Get, Param } from '@nestjs/common';
 import { QuizService } from './quiz.service';
 import { CreateQuizDto } from './dto/create-quiz.dto';
-import { ApiOperation, ApiOkResponse, ApiBody, ApiTags } from '@nestjs/swagger';
+import {
+  ApiOperation,
+  ApiOkResponse,
+  ApiBody,
+  ApiTags,
+  ApiParam,
+} from '@nestjs/swagger';
 import { Role } from '@prisma/client';
 import { JwtGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
@@ -26,6 +32,27 @@ export class QuizController {
   @Post()
   createQuiz(@UserDec() user: any, @Body() createQuizDto: CreateQuizDto) {
     return this.quizService.createQuiz(user.id, createQuizDto);
+  }
+
+  @Get()
+  @UseGuards(JwtGuard)
+  @ApiOperation({ summary: 'get all quizzes' })
+  @ApiOkResponse({
+    // type: CreateQuizDto,
+  })
+  getAllQuizzes() {
+    return this.quizService.getAllQuizzes();
+  }
+
+  @Get('for-student/:id')
+  @UseGuards(JwtGuard)
+  @ApiOperation({ summary: 'get  quiz with question by quiz id' })
+  @ApiOkResponse({
+    // type: CreateQuizDto,
+  })
+  @ApiParam({ name: 'id', type: 'string' })
+  getQuizWithQuestion(@Param('id') id: string) {
+    return this.quizService.getQuizWithQuestion(id);
   }
 
   @UseGuards(JwtGuard, RolesGuard)

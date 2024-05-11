@@ -3,6 +3,8 @@ import { CreateQuizDto } from './dto/create-quiz.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { ResponseQuestionDto } from './dto/student-answer.dto';
 import { CreateQuizQuestionDto } from './dto/create-quiz-question.dto';
+import { plainToInstance } from 'class-transformer';
+import { StudentQuizWithQuestionDto } from './dto/student-quiz-with-question.dto';
 
 @Injectable()
 export class QuizService {
@@ -15,6 +17,18 @@ export class QuizService {
     return this.prismaService.quiz.create({
       data: { ...createQuizDto, creator: { connect: { id: teacher?.id } } },
     });
+  }
+
+  async getAllQuizzes() {
+    return this.prismaService.quiz.findMany();
+  }
+
+  async getQuizWithQuestion(quizId: string) {
+    const quiz = this.prismaService.quiz.findUnique({
+      where: { id: quizId },
+      include: { questions: true },
+    });
+    return plainToInstance(StudentQuizWithQuestionDto, quiz);
   }
 
   async createQuizQuestion(createQuizQuestionDto: CreateQuizQuestionDto) {
