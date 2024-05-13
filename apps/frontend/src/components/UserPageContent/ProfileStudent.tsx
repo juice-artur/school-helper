@@ -11,7 +11,7 @@ export const ProfileStudent = () => {
     dispatch(deleteUserData());
   };
   const user = useAppSelector(state => state.user.data)
-  
+
   const baseUrl = import.meta.env.VITE_BACKEND_API_URL;
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -62,88 +62,90 @@ export const ProfileStudent = () => {
 
   return (
     <>
-      <Typography variant="h4">Профіль</Typography>
-      <Box
-        sx={{
-          boxShadow: "0px 4px 15px rgba(3, 2, 2, 0.25)",
-          borderRadius: "15px",
-        }}
-        maxWidth={800}
-        border={"none"}
-        margin={"20px"}
-        display="flex"
-        flexDirection={"column"}
-        justifyContent={"space-between"}
-        padding={"30px"}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
-          
+        { user &&
+      <><Typography variant="h4">Профіль</Typography><Box
+                  sx={{
+                      boxShadow: "0px 4px 15px rgba(3, 2, 2, 0.25)",
+                      borderRadius: "15px",
+                  }}
+                  maxWidth={800}
+                  border={"none"}
+                  margin={"20px"}
+                  display="flex"
+                  flexDirection={"column"}
+                  justifyContent={"space-between"}
+                  padding={"30px"}
+              >
+                  <Box
+                      sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                      }}
+                  >
 
-          <UserAvatar selectedFile={selectedFile} handleFileChange={handleFileChange} />
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              padding: "10px 50px",
-            }}
-          >
-            <Typography >Прізвище</Typography>
-            <Typography>Ім'я</Typography>
-            <Typography>По батькові</Typography>
-            <Typography>Телефон</Typography>
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-            }}
-          >
-            <TextField defaultValue={`${user?.lastName}`} size="small"></TextField>
-            <TextField defaultValue={`${user?.firstName}`} size="small"></TextField>
-            <TextField size="small"></TextField>
-            <TextField size="small"></TextField>
-          </Box>
-        </Box>
 
-        <Button
-          onClick={handleSubmit}
-          sx={{
-            marginTop: '8px',
-            maxWidth: "210px",
-            alignSelf: "flex-end",
-            backgroundColor: "#423A34",
-            borderRadius: "50px",
-            color: "white",
-            padding: "8px 30px",
-            textTransform: "none",
-          }}
-        >
-          <Typography>Зберегти</Typography>
-        </Button>
-        <Button
-          onClick={handleExit}
-          sx={{
-            marginTop: '8px',
-            maxWidth: "210px",
-            alignSelf: "flex-end",
-            backgroundColor: "#423A34",
-            borderRadius: "50px",
-            color: "white",
-            padding: "8px 30px",
-            textTransform: "none",
-          }}
-        >
-          <Typography>Вихід</Typography>
-        </Button>
-      </Box>
+                      <UserAvatar selectedFile={selectedFile} handleFileChange={handleFileChange} />
+                      <Box
+                          sx={{
+                              display: "flex",
+                              flexDirection: "column",
+                              justifyContent: "space-between",
+                              padding: "10px 50px",
+                          }}
+                      >
+                          <Typography>Прізвище</Typography>
+                          <Typography>Ім'я</Typography>
+                          <Typography>По батькові</Typography>
+                          <Typography>Телефон</Typography>
+                      </Box>
+                      <Box
+                          sx={{
+                              display: "flex",
+                              flexDirection: "column",
+                              justifyContent: "space-between",
+                          }}
+                      >
+                          <TextField defaultValue={`${user?.lastName}`} size="small"></TextField>
+                          <TextField defaultValue={`${user?.firstName}`} size="small"></TextField>
+                          <TextField size="small"></TextField>
+                          <TextField size="small"></TextField>
+                      </Box>
+                  </Box>
+
+                  <Button
+                      onClick={handleSubmit}
+                      sx={{
+                          marginTop: '8px',
+                          maxWidth: "210px",
+                          alignSelf: "flex-end",
+                          backgroundColor: "#423A34",
+                          borderRadius: "50px",
+                          color: "white",
+                          padding: "8px 30px",
+                          textTransform: "none",
+                      }}
+                  >
+                      <Typography>Зберегти</Typography>
+                  </Button>
+                  <Button
+                      onClick={handleExit}
+                      sx={{
+                          marginTop: '8px',
+                          maxWidth: "210px",
+                          alignSelf: "flex-end",
+                          backgroundColor: "#423A34",
+                          borderRadius: "50px",
+                          color: "white",
+                          padding: "8px 30px",
+                          textTransform: "none",
+                      }}
+                  >
+                      <Typography>Вихід</Typography>
+                  </Button>
+              </Box></>
+}
     </>
   );
+
 };
