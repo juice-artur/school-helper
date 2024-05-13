@@ -57,4 +57,14 @@ export class SchoolController {
   findAllTeacherBySchoolId(@Param('id') id: string) {
     return this.schoolService.findAllTeacherBySchoolId(id);
   }
+
+  @Get('/all')
+  @ApiOperation({ summary: 'Get all school' })
+  @ApiOkResponse({
+    type: SchoolDto,
+    isArray: true,
+  })
+  findAllSchool() {
+    return this.schoolService.findAll();
+  }
 }

@@ -36,6 +36,10 @@ export class SchoolService {
     });
   }
 
+  async findAll() {
+    return await this.prismaService.school.findMany({});
+  }
+
   async findAllTeacherBySchoolId(id: string) {
     const user = await this.prismaService.user.findMany({
       include: { userRoles: true },
