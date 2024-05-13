@@ -4,6 +4,7 @@ import school from "../../assets/img/shool.jpg";
 import { deleteUserData } from "../../store/reducers/user/userThunks";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { useState } from "react";
+import { setCurrentUser } from "../../store/reducers/user/userSlice";
 
 export const ProfileStudent = () => {
   const dispatch = useAppDispatch();
@@ -31,22 +32,25 @@ export const ProfileStudent = () => {
         if (!response.ok) {
             throw new Error('Failed to upload file');
         }
-        const res = await response.json().then(r =>{
-            console.log(JSON.stringify({ avatarKey: r.url.name }));
-            console.log(r.url.name);
+        await response.json().then(r =>{
+            console.log(JSON.stringify({ avatarKey: r.name }));
+            console.log(r.name);
             
-            fetch(`${baseUrl}/user`, {
+            return fetch(`${baseUrl}/user`, {
                 method: 'PATCH',
-                body: JSON.stringify({ avatarKey: r.url.name }),
+                body: JSON.stringify({ avatarKey: r.name }),
                 credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json'
                 },
+            }).then(async r=> {
+                const res = await r.json()
+                setCurrentUser(res);
             });
         })
-        console.log(res.name);
 
-    } catch (error) {
+        
+    } catch (error : any) {
         console.error('Error uploading file:', error.message);
     }
 };
