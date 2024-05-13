@@ -1,6 +1,6 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { deleteUserData } from "../../store/reducers/user/userThunks";
-import { useAppDispatch } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import { ChangeEvent, useState } from "react";
 import { setCurrentUser } from "../../store/reducers/user/userSlice";
 import { UserAvatar } from "./UserAvatar";
@@ -10,6 +10,8 @@ export const ProfileStudent = () => {
   const handleExit = async () => {
     dispatch(deleteUserData());
   };
+  const user = useAppSelector(state => state.user.data)
+  
   const baseUrl = import.meta.env.VITE_BACKEND_API_URL;
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -46,7 +48,7 @@ export const ProfileStudent = () => {
           });
     }
 
-    
+
 }
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -92,7 +94,7 @@ export const ProfileStudent = () => {
               padding: "10px 50px",
             }}
           >
-            <Typography>Прізвище</Typography>
+            <Typography >Прізвище</Typography>
             <Typography>Ім'я</Typography>
             <Typography>По батькові</Typography>
             <Typography>Телефон</Typography>
@@ -104,8 +106,8 @@ export const ProfileStudent = () => {
               justifyContent: "space-between",
             }}
           >
-            <TextField size="small"></TextField>
-            <TextField size="small"></TextField>
+            <TextField defaultValue={`${user?.lastName}`} size="small"></TextField>
+            <TextField defaultValue={`${user?.firstName}`} size="small"></TextField>
             <TextField size="small"></TextField>
             <TextField size="small"></TextField>
           </Box>
