@@ -109,6 +109,7 @@ export const ProfileStudent = () => {
         <Button
           onClick={handleSubmit}
           sx={{
+            marginTop: '8px',
             maxWidth: "210px",
             alignSelf: "flex-end",
             backgroundColor: "#423A34",
@@ -123,6 +124,7 @@ export const ProfileStudent = () => {
         <Button
           onClick={handleExit}
           sx={{
+            marginTop: '8px',
             maxWidth: "210px",
             alignSelf: "flex-end",
             backgroundColor: "#423A34",
