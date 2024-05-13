@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import { deleteUserData } from "../../store/reducers/user/userThunks";
 import { useAppDispatch } from "../../hooks";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { setCurrentUser } from "../../store/reducers/user/userSlice";
 import { UserAvatar } from "./UserAvatar";
 
@@ -10,18 +10,13 @@ export const ProfileStudent = () => {
   const handleExit = async () => {
     dispatch(deleteUserData());
   };
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const handleSubmit = async () => {
-    if (!selectedFile) {
-      alert("Please select a file.");
-      return;
-    }
+  const baseUrl = import.meta.env.VITE_BACKEND_API_URL;
 
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const uploadFile = async ()=>{
     const formData = new FormData();
-    formData.append("file", selectedFile);
-    const baseUrl = import.meta.env.VITE_BACKEND_API_URL;
-    try {
-      const response = await fetch(`${baseUrl}/file/upload`, {
+    formData.append("file", selectedFile!);
+    const response = await fetch(`${baseUrl}/file/upload`, {
         method: "POST",
         body: formData,
         credentials: "include",
@@ -30,27 +25,37 @@ export const ProfileStudent = () => {
       if (!response.ok) {
         throw new Error("Failed to upload file");
       }
-      await response.json().then((r) => {
-        return fetch(`${baseUrl}/user`, {
-          method: "PATCH",
-          body: JSON.stringify({ avatarKey: r.name }),
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }).then(async (r) => {
-          const res = await r.json();
-          setCurrentUser(res);
-        });
-      });
-    } catch (error: any) {
-      console.error("Error uploading file:", error.message);
-    }
-  };
+      return await response.json();
+  }
 
-  const handleFileChange = (event: any) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
+  const handleSubmit = async () => {
+    if(selectedFile)
+    {
+        uploadFile().then(r => {
+            return fetch(`${baseUrl}/user`, {
+              method: "PATCH",
+              body: JSON.stringify({ avatarKey: r.name }),
+              credentials: "include",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }).then(async (r) => {
+              const res = await r.json();
+              setCurrentUser(res);
+            });
+          });
+    }
+
+    
+}
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if(event.target.files)
+    {
+        const file = event.target.files[0];
+        setSelectedFile(file);
+    }
+
   };
 
   return (
