@@ -11,7 +11,6 @@ export const RegistrationPage = () => {
     const [isSuccessReg, setIsSuccessReg] = useState<boolean>(false)
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState<null|string>(null);
-    const [showPassword, setShowPassword] = useState(false);
 
 
     const [formState, setFormState] = useState<UserRegisterValues>({
