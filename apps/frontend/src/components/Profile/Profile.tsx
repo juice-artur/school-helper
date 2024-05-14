@@ -6,7 +6,7 @@ import { setCurrentUser } from "../../store/reducers/user/userSlice";
 import { UserAvatar } from "./UserAvatar";
 import {PatchUser} from "../../TypesAndInterfaces";
 
-export const ProfileStudent = () => {
+export const Profile = () => {
   const dispatch = useAppDispatch();
   const handleExit = async () => {
     dispatch(deleteUserData());

@@ -3,7 +3,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { Profile } from './Profile';
+import { Profile } from '../Profile/Profile';
 import { Class } from './Class';
 import { Subjects } from './Subjects';
 // import { Subjects } from './Subjects';

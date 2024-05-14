@@ -3,8 +3,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { Profile } from './Profile';
 import { School } from './School';
+import { Profile } from '../Profile/Profile';
 
 interface TabPanelProps {
   children?: React.ReactNode;
