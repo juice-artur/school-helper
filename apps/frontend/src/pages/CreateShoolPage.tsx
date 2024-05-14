@@ -73,13 +73,15 @@ export const CreateSchool = () => {
   });
 
   const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event);
+    
     setFormState({
       ...formState,
       [event.target.name]: event.target.value,
       });
   }
 
-  const handleSelect = (event: SelectChangeEvent<string>) => {
+  const handleSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormState({
       ...formState,
       [event.target.name]: event.target.value,
@@ -95,14 +97,19 @@ export const CreateSchool = () => {
         <form onSubmit={(event: React.FormEvent<HTMLFormElement>) => handleSubmit(event)} style={{ maxWidth: '1200px', display: 'flex', flexDirection: 'column'}}>
           <TextField onChange={handleFormChange} name='title' id="outlined-basic" label="Назва навчального закладу" variant="outlined" required sx={{margin:'25px 0'}}/>
           <TextField onChange={handleFormChange} name='description' id="outlined-multiline-flexible" label="Опис" variant="outlined" required multiline sx={{margin:'25px 0'}}/>
-          <InputLabel id="demo-simple-select-label">Область</InputLabel>
-          <Select
+          <TextField
+            select
             value={formState.district}
             name='district'
-            onChange={handleSelect}
+            label="Область"
+            onChange={handleFormChange}
           >
-            {districts.map((district) => <MenuItem value={district}>{district}</MenuItem>)} 
-          </Select>
+                      {districts.map((option) => (
+            <MenuItem key={option} value={option}>
+              {option}
+            </MenuItem>
+          ))}
+          </TextField>
           <TextField onChange={handleFormChange} name='city' id="outlined-basic" label="Населений пункт" variant="outlined" required sx={{margin:'25px 0'}}/>
           <TextField onChange={handleFormChange} name='index' id="outlined-basic" label="Індекс" variant="outlined" required sx={{margin:'25px 0'}}/>
           <TextField onChange={handleFormChange} name='phone' id="outlined-basic" label="Телефон контактної особи" variant="outlined" required sx={{margin:'25px 0'}}/>
