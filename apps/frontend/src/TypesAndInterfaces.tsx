@@ -28,3 +28,22 @@ export type UserLogInResValues = {
     refreshToken: string,
 }
 
+export type SchoolValues = {
+    title: string,
+    description: string,
+    district: string,
+    city: string,
+    index: string,
+    phone: string,
+}
+
+export type TestQuestion = {
+    text: string,
+    // file?: 
+    answer: string[],
+    answerOptions: string[],
+    questionType: string,
+    quizId: string,
+    score: string
+}
+

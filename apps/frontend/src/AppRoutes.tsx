@@ -5,6 +5,8 @@ import { SchoolsPage } from './pages/SchoolsPage';
 import { UserPage } from './pages/UserPage';
 import { VerticalTabs } from './components/TeacherPageContent/TabPanel'
 import { CreateSchool } from './pages/CreateShoolPage';
+import DirectorTabs from './components/DirectorPageContent/TabPannel';
+import { CreateTest } from './components/Test/CreateTest';
 
 const AppRoutes = [
     {
@@ -45,8 +47,16 @@ const AppRoutes = [
         element: <VerticalTabs/>
     },
     {
+        path: '/director-page',
+        element: <DirectorTabs/>
+    },
+    {
         path: '/create-school',
         element: <CreateSchool/>
+    },
+    {
+        path: '/create-test',
+        element: <CreateTest/>
     },
 ]
 
