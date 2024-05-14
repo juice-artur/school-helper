@@ -1,11 +1,7 @@
-import { Box, Button, TextField, Typography } from "@mui/material"
-import { useState } from "react"
-import school from '../../assets/img/shool.jpg'
+import { Box,Typography } from "@mui/material"
 
 
 export const SubjectsStudent = () => {
-
-    const tsks = 10
     return (
         <>
         <Typography variant='h4'>Предмети</Typography>
