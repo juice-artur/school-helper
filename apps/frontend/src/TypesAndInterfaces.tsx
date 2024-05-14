@@ -45,6 +45,7 @@ export type School = {
     city: string,
     index: string,
     phone: string,
+    email: string,
 }
 
 export type TestQuestion = {

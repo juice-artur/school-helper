@@ -69,6 +69,7 @@ export const CreateSchool = () => {
     city: '',
     index: '',
     phone: '',
+    email: '',
   });
 
   const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -105,6 +106,7 @@ export const CreateSchool = () => {
           <TextField onChange={handleFormChange} name='city' id="outlined-basic" label="Населений пункт" variant="outlined" required sx={{margin:'25px 0'}}/>
           <TextField onChange={handleFormChange} name='index' id="outlined-basic" label="Індекс" variant="outlined" required sx={{margin:'25px 0'}}/>
           <TextField onChange={handleFormChange} name='phone' id="outlined-basic" label="Телефон контактної особи" variant="outlined" required sx={{margin:'25px 0'}}/>
+          <TextField onChange={handleFormChange} name='email' id="outlined-basic" label="Електрона адреса школи" variant="outlined" required sx={{margin:'25px 0'}}/>
           <Button variant="contained" type="submit" sx={{margin:'25px 0'}}>Зареєструвати</Button>        
         </form>
       </Container>

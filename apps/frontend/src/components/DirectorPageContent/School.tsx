@@ -83,7 +83,7 @@ export const InfoBlock = () => {
         <Typography width="150px" color="black">
           Електронна пошта:
         </Typography>
-        <Typography color="black">Telefone</Typography>
+        <Typography color="black">{school?.email}</Typography>
       </Box>
       <Box sx={{ display: "flex", flexDirection: "row", margin: "25px 0" }}>
         <Typography width="150px" color="black">
@@ -108,7 +108,7 @@ export const InfoBlock = () => {
           Опис
         </Typography>
         <Typography width="800px" color="black">
-          {school?.description}{" "}
+          {school?.description}
         </Typography>
       </Box>
     </Container>
