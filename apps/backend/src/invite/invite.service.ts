@@ -33,7 +33,6 @@ export class InviteService {
   async acceptById(id: string) {
     const invitationToClass =
       await this.prismaService.invitationToClass.findUnique({ where: { id } });
-    console.log(invitationToClass);
     if (!invitationToClass) {
       throw new NotFoundException();
     }

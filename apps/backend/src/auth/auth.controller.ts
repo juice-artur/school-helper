@@ -32,7 +32,6 @@ export class AuthController {
     type: ResponseUserDto,
   })
   async getMe(@UserDec() user: any) {
-    console.log(user);
     return this.authService.getUserById(user.id);
   }
 

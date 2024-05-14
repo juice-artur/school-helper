@@ -170,7 +170,6 @@ export class UserService {
       await this.prismaService.verificationToken.deleteMany({
         where: { token },
       });
-      console.log(`Verification token ${token} deleted successfully`);
     } catch (error) {
       console.error(`Error deleting verification token ${token}:`, error);
       throw new Error(`Failed to delete verification token ${token}`);
