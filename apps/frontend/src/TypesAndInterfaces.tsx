@@ -38,7 +38,7 @@ export type UserLogInResValues = {
     refreshToken: string,
 }
 
-export type SchoolValues = {
+export type School = {
     title: string,
     description: string,
     district: string,

@@ -1,5 +1,4 @@
-import { Box, Button, Link, TextField, Typography } from "@mui/material"
-import { useState } from "react"
+import { Box, Button, TextField, Typography } from "@mui/material"
 import { useNavigate } from 'react-router-dom'
 import school from '../../assets/img/shool.jpg'
 import { deleteUserData } from "../../store/reducers/user/userThunks"

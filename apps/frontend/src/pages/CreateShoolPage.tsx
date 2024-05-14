@@ -1,6 +1,7 @@
-import { Button, Container, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography, formControlClasses } from "@mui/material"
+import { Button, Container, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography } from "@mui/material"
 import { useState } from "react";
-import { SchoolValues } from "../TypesAndInterfaces";
+import { School } from "../TypesAndInterfaces";
+import { useNavigate } from "react-router-dom";
 
   
   
@@ -35,7 +36,33 @@ export const CreateSchool = () => {
     'АР Крим'
   ];
 
-  const [formState, setFormState] = useState<SchoolValues>({
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const baseUrl = import.meta.env.VITE_BACKEND_API_URL;
+    try {
+    const schoolData = { ...formState};
+  
+      const response = await fetch(`${baseUrl}/school`, {
+        method: "POST",
+        body: JSON.stringify(schoolData),
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then(() => navigate('/director-page'));
+  
+      if (!response.ok) {
+        throw new Error("Failed to update user data");
+      }
+
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const [formState, setFormState] = useState<School>({
     title: '',
     description: '',
     district: '',
@@ -58,16 +85,12 @@ export const CreateSchool = () => {
       });
   }
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
 
-    console.log(formState)
-  }
 
   return(
     <>
       <Container sx={{ width: '70%', display: 'flex', flexDirection: 'column', margin: '50px auto'}}> 
-        <Typography variant='h4' textAlign={'center'} margin='50px'>Реєстрація школи</Typography>
+        <Typography variant='h1' color='black' textAlign={'center'} margin='50px'>Реєстрація школи</Typography>
         <form onSubmit={(event: React.FormEvent<HTMLFormElement>) => handleSubmit(event)} style={{ maxWidth: '1200px', display: 'flex', flexDirection: 'column'}}>
           <TextField onChange={handleFormChange} name='title' id="outlined-basic" label="Назва навчального закладу" variant="outlined" required sx={{margin:'25px 0'}}/>
           <TextField onChange={handleFormChange} name='description' id="outlined-multiline-flexible" label="Опис" variant="outlined" required multiline sx={{margin:'25px 0'}}/>
