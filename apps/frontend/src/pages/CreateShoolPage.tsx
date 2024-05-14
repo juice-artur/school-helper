@@ -1,4 +1,4 @@
-import { Button, Container, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography } from "@mui/material"
+import { Button, Container, MenuItem, TextField, Typography } from "@mui/material"
 import { useState } from "react";
 import { School } from "../TypesAndInterfaces";
 import { useNavigate } from "react-router-dom";
