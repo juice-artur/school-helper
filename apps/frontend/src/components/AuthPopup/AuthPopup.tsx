@@ -1,10 +1,8 @@
-import React, {useState, useEffect} from "react";
+import  {useState} from "react";
 import Close from '../../assets/img/Close icon.svg'
 import {
   Box,
   Dialog,
-  DialogContent,
-  TextField,
   Button,
   Typography
 } from '@mui/material';
@@ -17,7 +15,6 @@ export const AuthPopup = () => {
   const [open, setOpen] = useState(false);
   const [loginPopup, setLoginPopup] = useState(true);
   const [registerPopup, setRegisterPopup] = useState(false);
-  const [resetPopup, setResetPopup] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };

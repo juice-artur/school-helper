@@ -13,7 +13,7 @@ const theme = createTheme({
     MuiContainer: {
       styleOverrides: {
         root: {
-          maxWidth: '1200px', // Set your desired default width here
+          maxWidth: '1200px',
         },
       },
     },

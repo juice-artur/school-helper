@@ -11,6 +11,7 @@ import { MailModule } from './mail/mail.module';
 import { ClassModule } from './class/class.module';
 import { InviteModule } from './invite/invite.module';
 import { QuizModule } from './quiz/quiz.module';
+import { PostModule } from './post/post.module';
 import mail from './config/mail';
 import app_config from './config/appconfig';
 
@@ -26,6 +27,7 @@ import app_config from './config/appconfig';
     ClassModule,
     InviteModule,
     QuizModule,
+    PostModule,
   ],
   controllers: [AppController],
   providers: [AppService],

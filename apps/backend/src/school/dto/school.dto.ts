@@ -39,4 +39,14 @@ export class SchoolDto {
     example: '12345678-1234-1234-1234-123456789012',
   })
   directorId: string;
+  @ApiProperty({
+    description: 'Contact email for the school',
+    example: 'myschool@gmail.com',
+  })
+  email: string | null;
+  @ApiProperty({
+    description: 'District for the school',
+    example: 'Cherkasy',
+  })
+  district: string | null;
 }

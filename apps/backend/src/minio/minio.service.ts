@@ -81,7 +81,7 @@ export class MinioService {
 
     const url = await this.getFileByName(fileName);
 
-    return plainToInstance(ResponseFileDto, { url });
+    return plainToInstance(ResponseFileDto, { ...url });
   }
 
   async getFileByName(name: string): Promise<ResponseFileDto> {

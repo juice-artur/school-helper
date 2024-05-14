@@ -6,12 +6,8 @@ import { Navigate } from "react-router-dom";
 export const RegistrationPage = () => {
 
     const [isValidEmail, setIsValidEmail] = useState<boolean>(true)
-    const [isValidPassword, setIsValidPassword] = useState<boolean>(true)
-    // const [error, setError] = useState<string|null>(null)
-    const [isSuccessReg, setIsSuccessReg] = useState<boolean>(false)
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState<null|string>(null);
-    const [showPassword, setShowPassword] = useState(false);
 
 
     const [formState, setFormState] = useState<UserRegisterValues>({
@@ -72,6 +68,7 @@ export const RegistrationPage = () => {
                 <form style={{display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center'}}
                     onSubmit={(event: React.FormEvent<HTMLFormElement>) => handleSubmit(event)}>                        
                     <TextField
+                        error={isValidEmail}
                         fullWidth
                         id="email"
                         name="email"

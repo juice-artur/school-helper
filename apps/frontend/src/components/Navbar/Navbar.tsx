@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -19,8 +19,7 @@ export const Navbar = () => {
     dispatch(getUserData())
   }, [dispatch])
 
-  console.log(user);
-  
+
   return (
     <AppBar position="static" color='transparent' sx={{height:'80px', margin: '0px auto', padding: '40px 0', alignItems:'center', justifyContent: 'center', 
     backgroundColor: location.includes("schools") || location.includes("blog") || location.includes("about") || location.includes("contacts") ? "#998B71" : ''}}>

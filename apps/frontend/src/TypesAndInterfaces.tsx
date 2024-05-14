@@ -10,6 +10,14 @@ export type UserRegisterValues = {
     lastName: string, 
 }
 
+export type PatchUser = {
+    phoneNumber?: string,
+    surname?: string,
+    firstName?: string,
+    lastName?: string,
+    avatarKey?: string, 
+}
+
 export type User = {
     id: string,
     firstName: string,
@@ -20,6 +28,8 @@ export type User = {
     avatarKey: null|string,
     isActive: boolean,
     schoolId: string,
+    phoneNumber: string | null,
+    surname: string | null,
 }
 
 export type UserLogInResValues = {

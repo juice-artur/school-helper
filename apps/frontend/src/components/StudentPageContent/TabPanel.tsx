@@ -3,7 +3,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { Profile } from './Profile';
+import { ProfileStudent } from './ProfileStudent';
 import { Subjects } from './Subjects';
 
 interface TabPanelProps {
@@ -66,7 +66,7 @@ export default function VerticalTabs() {
         <Tab label="Однокласникт" {...a11yProps(4)} /> */}
       </Tabs>
       <TabPanel value={value} index={0}>
-        <Profile/>
+        <ProfileStudent/>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Subjects/>
