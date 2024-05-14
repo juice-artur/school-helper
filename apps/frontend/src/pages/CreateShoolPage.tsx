@@ -81,15 +81,6 @@ export const CreateSchool = () => {
       });
   }
 
-  const handleSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFormState({
-      ...formState,
-      [event.target.name]: event.target.value,
-      });
-  }
-
-
-
   return(
     <>
       <Container sx={{ width: '70%', display: 'flex', flexDirection: 'column', margin: '50px auto'}}> 
