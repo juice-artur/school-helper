@@ -10,6 +10,13 @@ export type UserRegisterValues = {
     lastName: string, 
 }
 
+export type ActivateTeacher = {
+    verificationToken: string,
+    password: string,
+    firstName: string,
+    lastName: string, 
+}
+
 export type PatchUser = {
     phoneNumber?: string,
     surname?: string,

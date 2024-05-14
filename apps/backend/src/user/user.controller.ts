@@ -12,7 +12,6 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { VerificationTokenService } from 'src/verification-token/verification-token.service';
 import { ActivateTeacherDto } from './dto/activate-teacher.dto';
 import { MailService } from 'src/mail/mail.service';
-import { log } from 'console';
 
 @ApiTags('User Endpoints')
 @Controller('user')
@@ -54,8 +53,6 @@ export class UserController {
     });
   }
 
-  @UseGuards(JwtGuard, RolesGuard)
-  @Roles(Role.DIRECTOR)
   @ApiOperation({ summary: 'Activate teacher' })
   @ApiOkResponse({
     type: ActivateTeacherDto,
