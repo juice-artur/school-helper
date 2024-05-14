@@ -1,6 +1,6 @@
 import { Button, Container, MenuItem, TextField, Typography } from "@mui/material"
 import { useState } from "react";
-import { School } from "../TypesAndInterfaces";
+import { ICreateSchool } from "../TypesAndInterfaces";
 import { useNavigate } from "react-router-dom";
 
   
@@ -62,7 +62,7 @@ export const CreateSchool = () => {
     }
   };
 
-  const [formState, setFormState] = useState<School>({
+  const [formState, setFormState] = useState<ICreateSchool>({
     title: '',
     description: '',
     district: '',

@@ -1,13 +1,15 @@
-import { Box, Button, Container, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Box, Button, Container, Typography } from "@mui/material";import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { useEffect, useState } from "react";
 import { getSchoolData } from "../../store/reducers/school/schoolThunks";
 import MultipleValuesInput from "./MultipleValuesInput";
+import TeacherCard from "../TeacherCard/TeacherCard";
+import { getTeachersBySchoolId } from "../../store/reducers/teacher/teacherThunks";
 
 export const School = () => {
   const dispatch = useAppDispatch();
   const school = useAppSelector((state) => state.school.data);
+
   useEffect(() => {
     dispatch(getSchoolData());
   }, [dispatch]);
@@ -69,8 +71,29 @@ export const Empty = () => {
 
 export const InfoBlock = () => {
   const school = useAppSelector((state) => state.school.data);
+  const teachers = useAppSelector((state) => state.teachers.data);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (school) {
+      dispatch(getTeachersBySchoolId(school.id));
+    }
+  }, [dispatch]);
+
   const [values, setValues] = useState<string[]>([]);
 
+  const inviteTeachers = async () => {
+    const baseUrl = import.meta.env.VITE_BACKEND_API_URL;
+    const emails = values.map(v => { return {email: v}})
+    await fetch(`${baseUrl}/user/create/teacher`, {
+      method: "POST",
+      body: JSON.stringify(emails),
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then(() => setValues([]));
+  };
   return (
     <Container>
       <Typography variant="h1" color="black">
@@ -115,13 +138,23 @@ export const InfoBlock = () => {
         </Typography>
       </Box>
 
+      <MultipleValuesInput
+        sxStyles={{ paddingTop: 4, paddingBottom: 2 }}
+        values={values}
+        setValues={setValues}
+      />
+      <Button variant="contained" onClick={() => inviteTeachers()}>
+        {" "}
+        Додати викладачів
+      </Button>
 
-      <MultipleValuesInput values={values} setValues={setValues}  />
-      <Button variant="contained"  onClick={() => 
-      {
-        setValues([])
-      }
-      }> Додати викладачів</Button>
+      {teachers.length ? (
+        teachers.map((t) => (
+          <TeacherCard user={t} sxStyles={{ marginTop: 4 }} />
+        ))
+      ) : (
+        <></>
+      )}
     </Container>
   );
 };

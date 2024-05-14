@@ -26,10 +26,11 @@ export type User = {
     password: string,
     googleId: null|string,
     avatarKey: null|string,
+    surname: string | null,
+    phoneNumber: string | null,
     isActive: boolean,
     schoolId: string,
-    phoneNumber: string | null,
-    surname: string | null,
+    userRoles: any,
 }
 
 export type UserLogInResValues = {
@@ -38,7 +39,18 @@ export type UserLogInResValues = {
     refreshToken: string,
 }
 
+export type ICreateSchool = {
+    title: string,
+    description: string,
+    district: string,
+    city: string,
+    index: string,
+    phone: string,
+    email: string,
+}
+
 export type School = {
+    id: string;
     title: string,
     description: string,
     district: string,

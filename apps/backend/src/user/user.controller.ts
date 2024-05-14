@@ -12,6 +12,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { VerificationTokenService } from 'src/verification-token/verification-token.service';
 import { ActivateTeacherDto } from './dto/activate-teacher.dto';
 import { MailService } from 'src/mail/mail.service';
+import { log } from 'console';
 
 @ApiTags('User Endpoints')
 @Controller('user')
@@ -41,6 +42,7 @@ export class UserController {
     @UserDec() director: any,
     @Body() createTeacherDtos: CreateTeacherDto[],
   ) {
+    console.log(createTeacherDtos)
     createTeacherDtos.map(async (createTeacherDto) => {
       const user = await this.userService.createTeacher(
         createTeacherDto,

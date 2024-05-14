@@ -43,6 +43,12 @@ const theme = createTheme({
       fontWeight: 300,
       color: '#000'
     },
+    h5: {
+      fontFamily: 'Inter, normal',
+      fontSize: 20,
+      fontWeight: 300,
+      color: '#000'
+    },
 }
 })
 

@@ -1,13 +1,14 @@
-import { TextField, Chip } from "@mui/material";
+import { TextField, Chip, Box, SxProps } from "@mui/material";
 import { useState } from "react";
 
 interface MultipleValuesInputProps{
     values: string[];
     setValues:  React.Dispatch<React.SetStateAction<string[]>>
+    sxStyles?: SxProps;
 }
 
 
-export const MultipleValuesInput = ({values, setValues}: MultipleValuesInputProps) => {
+export const MultipleValuesInput = ({values, setValues, sxStyles}: MultipleValuesInputProps) => {
   const [inputValue, setInputValue] = useState('');
  
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,14 +27,14 @@ export const MultipleValuesInput = ({values, setValues}: MultipleValuesInputProp
   };
 
   return (
-    <div>
+    <Box sx={sxStyles}>
       <TextField
-        label="Add Value"
+        label="Електрона адреса"
         value={inputValue}
         onChange={handleInputChange}
         onKeyDown={handleInputKeyDown}
       />
-      <div>
+      <Box  sx={{paddingTop: 1}}>
         {values.map((value, index) => (
           <Chip
             key={index}
@@ -42,8 +43,8 @@ export const MultipleValuesInput = ({values, setValues}: MultipleValuesInputProp
             color="primary"
           />
         ))}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

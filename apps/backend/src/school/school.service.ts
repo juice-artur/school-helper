@@ -43,7 +43,7 @@ export class SchoolService {
   async findAllTeacherBySchoolId(id: string) {
     const user = await this.prismaService.user.findMany({
       include: { userRoles: true },
-      where: { schoolId: id },
+      where: { schoolId: id, isActive: true },
     });
     if (!user) {
       throw NotFoundError;
