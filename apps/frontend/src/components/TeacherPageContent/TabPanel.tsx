@@ -6,7 +6,6 @@ import Box from '@mui/material/Box';
 import { Profile } from '../Profile/Profile';
 import { Class } from './Class';
 import { Subjects } from './Subjects';
-// import { Subjects } from './Subjects';
 
 interface TabPanelProps {
   children?: React.ReactNode;

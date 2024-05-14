@@ -81,7 +81,6 @@ export const RegisterPopup = ({ backToLoginPopup }: RegisterPopupProps) => {
   };
   return (
     <Box>
-      {/* <Typography variant='h3' sx={{fontSize: 16, color: '#000', fontWeight: 500}}>Реєстрація</Typography> */}
       <Box
         sx={{
           display: "flex",

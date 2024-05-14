@@ -1,8 +1,9 @@
 import { Box, Button, Container, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getSchoolData } from "../../store/reducers/school/schoolThunks";
+import MultipleValuesInput from "./MultipleValuesInput";
 
 export const School = () => {
   const dispatch = useAppDispatch();
@@ -68,6 +69,8 @@ export const Empty = () => {
 
 export const InfoBlock = () => {
   const school = useAppSelector((state) => state.school.data);
+  const [values, setValues] = useState<string[]>([]);
+
   return (
     <Container>
       <Typography variant="h1" color="black">
@@ -111,6 +114,14 @@ export const InfoBlock = () => {
           {school?.description}
         </Typography>
       </Box>
+
+
+      <MultipleValuesInput values={values} setValues={setValues}  />
+      <Button variant="contained"  onClick={() => 
+      {
+        setValues([])
+      }
+      }> Додати викладачів</Button>
     </Container>
   );
 };

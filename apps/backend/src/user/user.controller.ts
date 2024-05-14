@@ -35,19 +35,21 @@ export class UserController {
   @ApiOkResponse({
     type: CreateUserDto,
   })
-  @ApiBody({ type: CreateTeacherDto })
+  @ApiBody({ type: CreateTeacherDto, isArray: true })
   @Post('create/teacher')
   async createTeacher(
     @UserDec() director: any,
-    @Body() createTeacherDto: CreateTeacherDto,
+    @Body() createTeacherDtos: CreateTeacherDto[],
   ) {
-    const user = await this.userService.createTeacher(
-      createTeacherDto,
-      director.id,
-    );
-    const token = await this.verificationTokenService.create(user.id);
-    this.mailService.sendVerificationMail(token, createTeacherDto.email);
-    return user;
+    createTeacherDtos.map(async (createTeacherDto) => {
+      const user = await this.userService.createTeacher(
+        createTeacherDto,
+        director.id,
+      );
+      const token = await this.verificationTokenService.create(user.id);
+      this.mailService.sendVerificationMail(token, createTeacherDto.email);
+      return user;
+    });
   }
 
   @UseGuards(JwtGuard, RolesGuard)
