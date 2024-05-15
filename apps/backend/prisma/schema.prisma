@@ -109,7 +109,7 @@ model Class {
   scholId           String              @unique @map("school_id")
   school            School              @relation(fields: [scholId], references: [id])
   students          Student[]
-  homeroomTeacherId String              @map("homeroom_teacher_id")
+  homeroomTeacherId String              @unique @map("homeroom_teacher_id")
   homeroomTeacher   Teacher             @relation(fields: [homeroomTeacherId], references: [id])
   invitations       InvitationToClass[]
 

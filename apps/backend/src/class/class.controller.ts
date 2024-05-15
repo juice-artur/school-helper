@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Get } from '@nestjs/common';
 import { ClassService } from './class.service';
 import { CreateClassDto } from './dto/create-class.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -19,5 +19,13 @@ export class ClassController {
   @Post()
   create(@UserDec() user: any, @Body() createClassDto: CreateClassDto) {
     return this.classService.createClass(user.id, createClassDto);
+  }
+
+  @UseGuards(JwtGuard, RolesGuard)
+  @Roles(Role.TEACHER)
+  @ApiOperation({ summary: 'Get teacher class' })
+  @Get()
+  getOwnTeacherClass(@UserDec() user: any) {
+    return this.classService.getTeacherClassByUserId(user.id);
   }
 }

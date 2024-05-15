@@ -19,4 +19,15 @@ export class ClassService {
       },
     });
   }
+
+  async getTeacherClassByUserId(userId: string) {
+    const teacher = await this.prismaService.teacher.findUnique({
+      where: { userId: userId },
+      include: { user: { include: { school: true } } },
+    });
+
+    return this.prismaService.class.findUnique({
+      where: { homeroomTeacherId: teacher!.id },
+    });
+  }
 }
