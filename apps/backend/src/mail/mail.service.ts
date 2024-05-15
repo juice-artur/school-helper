@@ -46,7 +46,7 @@ export class MailService {
       subject: 'SchoolHelper! Invitation to class',
       template: './student-invite-to-class',
       context: {
-        confirmation_url: `${this.configObject.FRONTEND_URL}/invite/student/accept/${inventionId}`,
+        confirmation_url: `${this.configObject.BACKEND_URL}/invite/student/accept/${inventionId}`,
       },
     });
   }
