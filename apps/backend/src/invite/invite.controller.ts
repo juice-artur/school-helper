@@ -29,14 +29,17 @@ export class InviteController {
   @ApiOkResponse({
     type: CreateClassInviteDto,
   })
-  @ApiBody({ type: CreateClassInviteDto })
-  async inviteStudent(@Body() createInviteDto: CreateClassInviteDto) {
-    const invitation = await this.inviteService.create(createInviteDto);
-    this.mailService.sendInviteStudentToClassMail(
-      invitation.id,
-      createInviteDto.userEmail,
-    );
-    return invitation;
+  @ApiBody({ type: CreateClassInviteDto, isArray: true })
+  async inviteStudent(@Body() createInviteDtos: CreateClassInviteDto[]) {
+    console.log(createInviteDtos);
+    return createInviteDtos.map(async (createInviteDto) => {
+      const invitation = await this.inviteService.create(createInviteDto);
+      this.mailService.sendInviteStudentToClassMail(
+        invitation.id,
+        createInviteDto.userEmail,
+      );
+      return invitation;
+    });
   }
 
   @Get('student/accept/:id')

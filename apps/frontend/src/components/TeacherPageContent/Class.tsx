@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";import { useEffect, useState } from "react";
 import { SchoolClass } from "../../TypesAndInterfaces";
 import { CreateClass } from "./CreateClass";
+import { TeacherClass } from "./TeacherClass";
 export const Class = () => {
   return <Empty />;
 };
@@ -31,7 +32,7 @@ export const Empty = () => {
         margin: "0 50px",
       }}
     >
-      {myClass ? <></> : <CreateClass /> }
+      {myClass ? <TeacherClass schoolClass={myClass}></TeacherClass> : <CreateClass /> }
     </Box>
   );
 };

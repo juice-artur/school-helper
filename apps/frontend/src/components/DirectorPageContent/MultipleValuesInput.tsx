@@ -37,6 +37,7 @@ export const MultipleValuesInput = ({values, setValues, sxStyles}: MultipleValue
       <Box  sx={{paddingTop: 1}}>
         {values.map((value, index) => (
           <Chip
+          sx={{marginBottom: 1, marginRight:1}}
             key={index}
             label={value}
             onDelete={handleChipDelete(value)}
