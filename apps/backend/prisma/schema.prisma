@@ -105,7 +105,7 @@ model Teacher {
 
 model Class {
   id                String              @id @default(uuid())
-  order             String
+  title             String
   scholId           String              @unique @map("school_id")
   school            School              @relation(fields: [scholId], references: [id])
   students          Student[]

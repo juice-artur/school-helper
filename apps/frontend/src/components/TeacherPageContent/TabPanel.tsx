@@ -61,9 +61,6 @@ export function VerticalTabs() {
         <Tab label="Профіль" {...a11yProps(0)} />
         <Tab label="Клас" {...a11yProps(1)} />
         <Tab label="Предмети" {...a11yProps(2)} />
-        {/* In future */}
-        {/* <Tab label="Викладачі" {...a11yProps(3)} />
-        <Tab label="Однокласникт" {...a11yProps(4)} /> */}
       </Tabs>
       <TabPanel value={value} index={0}>
         <Profile/>

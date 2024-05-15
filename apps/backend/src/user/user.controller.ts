@@ -41,7 +41,6 @@ export class UserController {
     @UserDec() director: any,
     @Body() createTeacherDtos: CreateTeacherDto[],
   ) {
-    console.log(createTeacherDtos)
     createTeacherDtos.map(async (createTeacherDto) => {
       const user = await this.userService.createTeacher(
         createTeacherDto,

@@ -3,9 +3,9 @@ import { IsNotEmpty } from 'class-validator';
 
 export class CreateClassDto {
   @ApiProperty({
-    example: '11',
-    description: 'Order',
+    example: '7-A',
+    description: 'Title',
   })
   @IsNotEmpty()
-  order: string;
+  title: string;
 }
