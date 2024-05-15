@@ -80,7 +80,7 @@ export const Empty = () => {
           >
             Створити клас
           </Typography>
-          <Button>
+          <Button onClick={handleClose}>
           <img src={Close} alt="" width='20px' />
         </Button>
         </Box>
