@@ -5,9 +5,13 @@ export const Class = () => {
 };
 
 export const Empty = () => {
+
+    const [classTitle, setClassTitle] = useState<string>('');
+
+
   const style = {
     borderRadius: "16px",
-    position: "absolute" as "absolute",
+    position: "absolute" as const,
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
@@ -19,6 +23,17 @@ export const Empty = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const handleCreate = async () => {
+    const baseUrl = import.meta.env.VITE_BACKEND_API_URL;
+    await fetch(`${baseUrl}/class`, {
+      method: "POST",
+      body: JSON.stringify({title: classTitle}),
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then(() =>  handleClose());
+  }
   return (
     <Box
       sx={{
@@ -90,12 +105,12 @@ export const Empty = () => {
           </Typography>
           <TextField
             sx={{ width: "100%" }}
-            onChange={(e) => {}}
+            onChange={(e) => {setClassTitle(e.target.value)}}
             size="small"
           ></TextField>
         <Box sx={{display: "flex", paddingTop:2, flexDirection: "row-reverse"}}>
             <Button variant="outlined" onClick={handleClose}>Скасувати</Button>
-            <Button sx={{marginRight: 2}} variant="contained" onClick={() =>{}}>Зберегти</Button>
+            <Button onClick={handleCreate} sx={{marginRight: 2}} variant="contained">Зберегти</Button>
         </Box>
 
         </Box>
