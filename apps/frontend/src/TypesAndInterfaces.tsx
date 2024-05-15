@@ -77,3 +77,10 @@ export type TestQuestion = {
     score: string
 }
 
+
+export type SchoolClass = {
+    id: string,
+    title: string,
+    schoolId: string,
+    homeroomTeacherId: string
+}
