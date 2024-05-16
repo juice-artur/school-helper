@@ -1,7 +1,11 @@
 import { Container, Typography, Button } from "@mui/material";
 import { SchoolClass } from "../../TypesAndInterfaces";
 import MultipleValuesInput from "../DirectorPageContent/MultipleValuesInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { getUserData } from "../../store/reducers/user/userThunks";
+import { getStudentsByClassId } from "../../store/reducers/student/studentThunks";
+import TeacherCard from "../TeacherCard/TeacherCard";
 
 interface TeacherClassProps {
   schoolClass: SchoolClass;
@@ -23,6 +27,15 @@ export const TeacherClass = ({ schoolClass }: TeacherClassProps) => {
       },
     }).then(() => setValues([]));
   };
+
+
+  const dispatch = useAppDispatch();
+  const students = useAppSelector(state => state.students.data)
+  useEffect(() => {
+    dispatch(getStudentsByClassId(schoolClass.id))
+  }, [dispatch])
+
+  
   return (
     <Container>
       <Typography variant="h1" color="black">
@@ -36,6 +49,13 @@ export const TeacherClass = ({ schoolClass }: TeacherClassProps) => {
       <Button variant="contained" onClick={() => inviteStudents()}>
         Додати учнів
       </Button>
+      {students.length ? (
+        students.map((student) => (
+          <TeacherCard user={student.user} sxStyles={{ marginTop: 4 }} />
+        ))
+      ) : (
+        <></>
+      )}
     </Container>
   );
 };
