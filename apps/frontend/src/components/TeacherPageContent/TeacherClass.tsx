@@ -3,7 +3,6 @@ import { SchoolClass } from "../../TypesAndInterfaces";
 import MultipleValuesInput from "../DirectorPageContent/MultipleValuesInput";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { getUserData } from "../../store/reducers/user/userThunks";
 import { getStudentsByClassId } from "../../store/reducers/student/studentThunks";
 import TeacherCard from "../TeacherCard/TeacherCard";
 
