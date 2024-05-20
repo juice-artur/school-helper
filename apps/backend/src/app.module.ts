@@ -13,6 +13,7 @@ import { InviteModule } from './invite/invite.module';
 import { QuizModule } from './quiz/quiz.module';
 import { PostModule } from './post/post.module';
 import { StudentModule } from './student/student.module';
+import { SubjectModule } from './subject/subject.module';
 import mail from './config/mail';
 import app_config from './config/appconfig';
 
@@ -30,6 +31,7 @@ import app_config from './config/appconfig';
     QuizModule,
     PostModule,
     StudentModule,
+    SubjectModule,
   ],
   controllers: [AppController],
   providers: [AppService],
