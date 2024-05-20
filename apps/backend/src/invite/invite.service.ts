@@ -49,7 +49,7 @@ export class InviteService {
   async getPendingInviteUser(classId: string) {
     const invitationToClass =
       await this.prismaService.invitationToClass.findMany({
-        where: {classId: classId},
+        where: { classId: classId },
         include: { student: { include: { user: true } } },
       });
 
