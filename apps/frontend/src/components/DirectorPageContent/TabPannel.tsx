@@ -5,6 +5,8 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { School } from './School';
 import { Profile } from '../Profile/Profile';
+import { Class } from './Class';
+import { Subjects } from './Subjects';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -39,7 +41,7 @@ function a11yProps(index: number) {
   };
 }
 
-export default function DirectorTabs() {
+export function DirectorVerticalTabs() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -60,6 +62,8 @@ export default function DirectorTabs() {
       >
         <Tab label="Профіль" {...a11yProps(0)} />
         <Tab label="Школа" {...a11yProps(1)} />
+        <Tab label="Клас" {...a11yProps(2)} />
+        <Tab label="Предмет" {...a11yProps(3)} />
         {/* In future */}
         {/* <Tab label="Викладачі" {...a11yProps(3)} />
         <Tab label="Однокласникт" {...a11yProps(4)} /> */}
@@ -71,10 +75,10 @@ export default function DirectorTabs() {
         <School/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        <Class/>
       </TabPanel>
       <TabPanel value={value} index={3}>
-        Item Four
+        <Subjects/>
       </TabPanel>
       <TabPanel value={value} index={4}>
         Item Five

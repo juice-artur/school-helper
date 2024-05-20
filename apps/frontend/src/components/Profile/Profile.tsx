@@ -1,17 +1,22 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import { deleteUserData } from "../../store/reducers/user/userThunks";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { ChangeEvent, useState } from "react";
 import { setCurrentUser } from "../../store/reducers/user/userSlice";
 import { UserAvatar } from "./UserAvatar";
 import {PatchUser} from "../../TypesAndInterfaces";
+import { useNavigate } from "react-router-dom";
 
 export const Profile = () => {
+  const navigate = useNavigate()
   const dispatch = useAppDispatch();
   const handleExit = async () => {
     dispatch(deleteUserData());
+    navigate('/')
+
   };
   const user = useAppSelector((state) => state.user.data);
+  console.log(user)
 
   const baseUrl = import.meta.env.VITE_BACKEND_API_URL;
 
@@ -76,7 +81,7 @@ export const Profile = () => {
   return (
     <>
       {user && (
-        <>
+        <Container sx={{padding: '20px'}}>
           <Typography variant="h4">Профіль</Typography>
           <Box
             sx={{
@@ -85,7 +90,7 @@ export const Profile = () => {
             }}
             maxWidth={800}
             border={"none"}
-            margin={"20px"}
+            margin={"20px 0"}
             display="flex"
             flexDirection={"column"}
             justifyContent={"space-between"}
@@ -184,7 +189,7 @@ export const Profile = () => {
               <Typography>Вихід</Typography>
             </Button>
           </Box>
-        </>
+        </Container>
       )}
     </>
   );

@@ -1,5 +1,5 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ActivateTeacher } from "../TypesAndInterfaces";
 import { Navigate, useLocation } from "react-router-dom";
 
@@ -7,6 +7,16 @@ export const RegistrationPage = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<null | string>(null);
   const location = useLocation();
+  
+  useEffect(()=> {
+    const queryParams = new URLSearchParams(location.search);
+    const value = queryParams.get("token");
+    if (!value) {
+      return;
+    }    
+
+    setFormState({ ...formState, verificationToken: value })
+  }, [])
 
   const [formState, setFormState] = useState<ActivateTeacher>({
     password: "",
@@ -17,14 +27,6 @@ export const RegistrationPage = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const queryParams = new URLSearchParams(location.search);
-    const value = queryParams.get("token");
-    if (!value) {
-      return;
-    }
-    setFormState({ ...formState, verificationToken: value });
-    console.log(formState);
-    
     const baseUrl = import.meta.env.VITE_BACKEND_API_URL;
     const response = await fetch(`${baseUrl}/user/activate/teacher`, {
       method: "POST",

@@ -22,7 +22,7 @@ export const Navbar = () => {
 
   return (
     <AppBar position="static" color='transparent' sx={{height:'80px', margin: '0px auto', padding: '40px 0', alignItems:'center', justifyContent: 'center', 
-    backgroundColor: location.includes("schools") || location.includes("blog") || location.includes("about") || location.includes("contacts") ? "#998B71" : ''}}>
+    backgroundColor: location.includes("schools") || location.includes("blog") || location.includes("about") || location.includes("contacts") || location.includes("user")  ? "#998B71" : ''}}>
       <Container sx={{ zIndex:'2', display: 'flex', justifyContent:'space-between', fontSize: '20px', maxWidth: '1200px'}}>
         <Box sx={{ display: 'block', alignItems: 'center', justifyContent: 'center' }}>
           <Link to='/'>
@@ -30,7 +30,7 @@ export const Navbar = () => {
           </Link>
         </Box>
     
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', }}>
           <Box sx={{ display: { xs: 'none', md: 'flex', flexDirection: 'raw', gap: '10px', marginRight: '50px' } }}>
             <Link to='/schools' style={{textDecoration: 'none'}}>
                 <Typography variant='h3' textAlign="center" padding={'10px'}>Заклади освіти</Typography>

@@ -49,7 +49,7 @@ model User {
 }
 
 model InvitationToClass {
-  id        String  @id @default(uuid())
+  id        String  @id @unique @default(uuid())
   classId   String
   class     Class   @relation(fields: [classId], references: [id])
   studentId String  @unique
@@ -106,7 +106,7 @@ model Teacher {
 model Class {
   id                String              @id @default(uuid())
   title             String
-  schoolId           String              @unique @map("school_id")
+  schoolId          String              @unique @map("school_id")
   school            School              @relation(fields: [schoolId], references: [id])
   students          Student[]
   homeroomTeacherId String              @unique @map("homeroom_teacher_id")

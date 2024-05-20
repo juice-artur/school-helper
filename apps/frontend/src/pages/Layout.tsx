@@ -1,6 +1,7 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CssBaseline, Box} from '@mui/material';
 import {Navbar} from "../components/Navbar/Navbar";
+import { useEffect, useState } from 'react';
 // import {Footer} from "../../components/Footer";
 
 const theme = createTheme({
@@ -52,7 +53,15 @@ const theme = createTheme({
 }
 })
 
+
+
 export const Layout = (props:any):JSX.Element => {
+  const [path, setPath] = useState(window.location.pathname);
+
+  useEffect(() => {
+  
+  }, [path])
+
     return(
         <ThemeProvider theme={theme}>
         <CssBaseline/>
@@ -61,7 +70,8 @@ export const Layout = (props:any):JSX.Element => {
           flexDirection: 'column',
           boxSizing: 'border-box',
         }}>
-          <Navbar/>
+          {path === '/admin' ? <></> : <Navbar/>}
+          
           <Box sx={{
             minHeight: 'calc(100vh - 395px)'
           }}>

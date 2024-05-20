@@ -51,7 +51,7 @@ export const CreateSchool = () => {
         headers: {
           "Content-Type": "application/json",
         },
-      }).then(() => navigate('/director-page'));
+      }).then(() => navigate('/user'));
   
       if (!response.ok) {
         throw new Error("Failed to update user data");

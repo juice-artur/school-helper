@@ -37,5 +37,5 @@ export class CreateQuizQuestionDto {
     example: '10',
     description: 'score',
   })
-  score: number;
+  score: string;
 }

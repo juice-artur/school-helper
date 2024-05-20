@@ -25,7 +25,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ p: 3,}}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -40,7 +40,7 @@ function a11yProps(index: number) {
   };
 }
 
-export function VerticalTabs() {
+export function TeacherVerticalTabs() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {

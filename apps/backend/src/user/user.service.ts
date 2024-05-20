@@ -126,9 +126,11 @@ export class UserService {
   }
 
   async activateTeacher(activateTeacherDto: ActivateTeacherDto): Promise<User> {
+    console.log(activateTeacherDto)
     const userId = await this.findUserIdByVerificationToken(
       activateTeacherDto.verificationToken!,
     );
+    console.log(userId)
     if (!userId) {
       throw new NotFoundException();
     }

@@ -39,7 +39,7 @@ export class QuizService {
         text: createQuizQuestionDto.text,
         questionType: createQuizQuestionDto.questionType,
         quiz: { connect: { id: createQuizQuestionDto.quizId } },
-        score: createQuizQuestionDto.score,
+        score: +createQuizQuestionDto.score,
       },
     });
   }

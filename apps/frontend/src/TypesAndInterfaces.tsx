@@ -36,8 +36,12 @@ export type User = {
   phoneNumber: string | null;
   isActive: boolean;
   schoolId: string;
-  userRoles: any;
+  userRoles: UserRoles[];
 };
+
+export type UserRoles = {
+  role: string;
+}
 
 export type UserLogInResValues = {
   user: User;
@@ -69,8 +73,8 @@ export type School = {
 export type TestQuestion = {
   text: string;
   // file?:
-  answer: string[];
-  answerOptions: string[];
+  answer: string;
+  answerOptions: string;
   questionType: string;
   quizId: string;
   score: string;

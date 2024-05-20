@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateSchoolDto } from './dto/create-school.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { NotFoundError } from 'rxjs';
@@ -28,8 +28,9 @@ export class SchoolService {
       where: { id: id },
       include: { school: true },
     });
+    console.log(user)
     if (!user || !user.school) {
-      throw NotFoundError;
+      return NotFoundException;
     }
     return await this.prismaService.school.findUnique({
       where: { id: user.school.id },

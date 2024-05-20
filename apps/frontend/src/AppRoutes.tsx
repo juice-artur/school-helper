@@ -3,10 +3,9 @@ import { HomePage } from './pages/HomePage';
 import { RegistrationPage } from './pages/RegistrationPage';
 import { SchoolsPage } from './pages/SchoolsPage';
 import { UserPage } from './pages/UserPage';
-import { VerticalTabs } from './components/TeacherPageContent/TabPanel'
 import { CreateSchool } from './pages/CreateShoolPage';
-import DirectorTabs from './components/DirectorPageContent/TabPannel';
 import { CreateTest } from './components/Test/CreateTest';
+import { AdminPage } from './pages/AdminPage';
 
 const AppRoutes = [
     {
@@ -14,7 +13,7 @@ const AppRoutes = [
         element: <HomePage/> 
     },
     {
-        path: '/shools',  
+        path: '/schools',  
         element: <SchoolsPage/>
     },
     {
@@ -39,17 +38,21 @@ const AppRoutes = [
         element: <UserPage/>
     },
     {
+        path: '/admin',
+        element: <AdminPage/>
+    },
+    {
         path: '/registration',
         element: <RegistrationPage/>
     },
-    {
-        path: '/teacher-page',
-        element: <VerticalTabs/>
-    },
-    {
-        path: '/director-page',
-        element: <DirectorTabs/>
-    },
+    // {
+    //     path: '/teacher-page',
+    //     element: <VerticalTabs/>
+    // },
+    // {
+    //     path: '/director-page',
+    //     element: <DirectorTabs/>
+    // },
     {
         path: '/create-school',
         element: <CreateSchool/>

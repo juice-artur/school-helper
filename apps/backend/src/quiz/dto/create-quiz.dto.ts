@@ -6,4 +6,5 @@ export class CreateQuizDto {
     description: 'Quiz title',
   })
   title: string;
+  id: string;
 }

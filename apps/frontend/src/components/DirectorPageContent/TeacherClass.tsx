@@ -34,13 +34,12 @@ export const TeacherClass = ({ schoolClass }: TeacherClassProps) => {
     dispatch(getStudentsByClassId(schoolClass.id))
   }, [dispatch])
 
-  console.log(students)
+  
   return (
     <Container>
       <Typography variant="h1" color="black">
         {schoolClass?.title}
       </Typography>
-      <Typography variant='h3' color='black'>Запросіть учнів до класу</Typography>
       <MultipleValuesInput
         sxStyles={{ paddingTop: 4, paddingBottom: 2 }}
         values={values}

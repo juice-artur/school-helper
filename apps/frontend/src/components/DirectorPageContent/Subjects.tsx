@@ -1,14 +1,8 @@
 import { Box, Button, Typography } from "@mui/material"
-import { CreateSubject } from "./CreateSubject"
 
 export const Subjects = () => {
     return (
-        <>
-        {/* <Empty/> */}
-        <CreateSubject/>
-        <Subject/>
-        </>
-        
+        <Empty/>
     )
 }
 
@@ -35,16 +29,5 @@ export const Empty = () => {
                 </Button>
             </Box>
         </Box>
-    )
-}
-
-const Subject = () => {
-    return (
-        <>
-        <Box sx={{borderRadius: '20px', border: '1px solid gray', padding: '30px'}}>
-            <Typography variant='h3' color='black'>Математика</Typography>
-            <Typography>7 клас</Typography>
-        </Box>
-        </>
     )
 }
