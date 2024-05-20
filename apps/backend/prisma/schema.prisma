@@ -170,7 +170,7 @@ model Quiz {
   id        String         @id @default(uuid())
   title     String
   questions Question[]
-  creatorId String         @unique @map("creator_id")
+  creatorId String         @map("creator_id")
   creator   Teacher        @relation(fields: [creatorId], references: [id])
   Answer    StudentAnswer?
 

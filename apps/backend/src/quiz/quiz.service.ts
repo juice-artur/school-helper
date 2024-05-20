@@ -10,6 +10,7 @@ import { StudentQuizWithQuestionDto } from './dto/student-quiz-with-question.dto
 export class QuizService {
   constructor(private readonly prismaService: PrismaService) {}
   async createQuiz(userId: string, createQuizDto: CreateQuizDto) {
+    console.log(userId);
     const teacher = await this.prismaService.teacher.findUnique({
       where: { userId: userId },
     });
