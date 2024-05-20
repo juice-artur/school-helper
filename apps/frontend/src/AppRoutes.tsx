@@ -6,6 +6,7 @@ import { UserPage } from './pages/UserPage';
 import { CreateSchool } from './pages/CreateShoolPage';
 import { CreateTest } from './components/Test/CreateTest';
 import { AdminPage } from './pages/AdminPage';
+import { AboutPage } from './pages/AboutPage';
 
 const AppRoutes = [
     {
@@ -23,7 +24,7 @@ const AppRoutes = [
     },
     {
         path: '/about',
-        element: <></>
+        element: <AboutPage/>
     },
     {
         path: '/contacts',
