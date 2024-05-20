@@ -120,7 +120,7 @@ model Student {
   id       String             @id @default(uuid())
   userId   String             @unique @map("user_id")
   user     User               @relation(fields: [userId], references: [id])
-  classId  String?            @unique @map("class_id")
+  classId  String?            @map("class_id")
   class    Class?             @relation(fields: [classId], references: [id])
   invation InvitationToClass?
   answers  StudentAnswer[]

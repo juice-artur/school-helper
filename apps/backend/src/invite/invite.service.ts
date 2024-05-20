@@ -41,12 +41,6 @@ export class InviteService {
       throw new NotFoundException();
     }
     console.log(invitationToClass);
-
-
-    const student = await this.prismaService.student.update({
-      where: { id: invitationToClass.studentId },
-      data: { classId: null },
-    });
   
     const updatedStudent = await this.prismaService.student.update({
       where: { id: invitationToClass.studentId },
