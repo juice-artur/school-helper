@@ -94,11 +94,12 @@ model School {
 }
 
 model Teacher {
-  id      String  @id @default(uuid())
-  userId  String  @unique @map("user_id")
-  user    User    @relation(fields: [userId], references: [id])
-  classes Class[]
-  Quiz    Quiz[]
+  id       String    @id @default(uuid())
+  userId   String    @unique @map("user_id")
+  user     User      @relation(fields: [userId], references: [id])
+  classes  Class[]
+  subjects Subject[]
+  Quiz     Quiz[]
 
   @@map("teacher")
 }
@@ -129,9 +130,12 @@ model Student {
 }
 
 model Subject {
-  id    String @id @default(uuid())
-  title String
-  task  Task[]
+  id        String   @id @default(uuid())
+  title     String
+  teacherId String?  @map("teacher_id")
+  teacher   Teacher? @relation(fields: [teacherId], references: [id])
+  task      Task[]
+  quiz      Quiz[]
 
   @@map("subject")
 }
@@ -172,6 +176,8 @@ model Quiz {
   questions Question[]
   creatorId String         @map("creator_id")
   creator   Teacher        @relation(fields: [creatorId], references: [id])
+  subjectId String?         @map("subject_id")
+  subject   Subject?        @relation(fields: [subjectId], references: [id])
   Answer    StudentAnswer?
 
   @@map("quiz")

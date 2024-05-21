@@ -6,5 +6,10 @@ export class CreateQuizDto {
     description: 'Quiz title',
   })
   title: string;
+  @ApiProperty({
+    example: 'UUID',
+    description: 'SubjectId',
+  })
+  subjectId: string;
   id: string;
 }
