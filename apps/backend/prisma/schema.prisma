@@ -190,7 +190,7 @@ model Question {
   answerOptions String         @unique @map("answer_options")
   questionType  QuestionType   @map("question_type")
   quiz          Quiz           @relation(fields: [quizId], references: [id])
-  quizId        String         @unique @map("quiz_id")
+  quizId        String         @map("quiz_id")
   Answer        StudentAnswer?
   score         Int?
 
